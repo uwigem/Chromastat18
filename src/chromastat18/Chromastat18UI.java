@@ -11,11 +11,13 @@ package chromastat18;
  */
 public class Chromastat18UI extends javax.swing.JFrame {
 
+    private final boolean actualDevice;
     /**
      * Creates new form Chromastat18UI
      */
     public Chromastat18UI() {
         initComponents();
+        this.actualDevice = false;
     }
 
     /**
