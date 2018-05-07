@@ -5,12 +5,16 @@
  */
 package chromastat18;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
 /**
  *
  * @author WilliamKwok
  */
-public class Chromastat18UI extends javax.swing.JFrame {
-
+public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
+    private final Timer timer = new Timer(16, this); // 16 in ms
     private final boolean actualDevice;
     /**
      * Creates new form Chromastat18UI
@@ -18,6 +22,7 @@ public class Chromastat18UI extends javax.swing.JFrame {
     public Chromastat18UI() {
         initComponents();
         this.actualDevice = false;
+        timer.start();
     }
 
     /**
@@ -29,17 +34,27 @@ public class Chromastat18UI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        text1 = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        text1.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(124, 124, 124)
+                .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,7 +94,11 @@ public class Chromastat18UI extends javax.swing.JFrame {
             }
         });
     }
+    public void actionPerformed(ActionEvent e) {
+        this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField text1;
     // End of variables declaration//GEN-END:variables
 }
