@@ -10,18 +10,18 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 /**
- *
+ * UI Class of Chromastat 18
  * @author WilliamKwok
  */
 public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
+    // Set up a timer for refreshing the graphics
     private final Timer timer = new Timer(16, this); // 16 in ms
-    private final boolean actualDevice;
+    
     /**
-     * Creates new form Chromastat18UI
+     * Creates the new GUI, and also invokes the timer to start refreshing.
      */
     public Chromastat18UI() {
         initComponents();
-        this.actualDevice = false;
         timer.start();
     }
 
@@ -94,6 +94,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             }
         });
     }
+    
+    /**
+     * This method is called every few milliseconds, dependent on the
+     * timer parameter. 
+     * @param e No need to worry about this, the timer calls it automatically. 
+     */
     public void actionPerformed(ActionEvent e) {
         this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
     }
