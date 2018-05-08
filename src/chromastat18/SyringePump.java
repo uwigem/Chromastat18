@@ -23,6 +23,7 @@ public class SyringePump {
     private final GpioPinDigitalInput maxStop;
     int delay = 1;
     
+    
     /**
      * Constructor for a single syringe pump
      * @pre inArgs must have ONLY these keys: dirPin, stepPin, enablePin, minPin, maxPin
@@ -36,22 +37,38 @@ public class SyringePump {
         this.enablePin = mcp.output(inArgs.get("enablePin"), PinState.LOW);
         this.minStop = mcp.input(inArgs.get("minPin"));
         this.maxStop = mcp.input(inArgs.get("maxPin"));
-        
     }
     
     /**
      * @return returns if minimum switch is pressed (empty syringe)
      */
     public boolean minPressed() {
-        return true;
+        return this.minStop.isHigh();
     }
     
     /**
      * @return returns if the maximum switch is pressed (full syringe)
      */
     public boolean maxPressed() {
-        return true;
+        return this.maxStop.isHigh();
     }
     
-    
+    /**
+     * Moves the syringe a specified amount of steps and direction
+     * @param steps steps to move
+     * @param dispense direction. If dispensing, this will be true.
+     */
+    public void takeSteps(int steps, boolean dispense) throws InterruptedException {
+        if(dispense) {
+            this.dirPin.low();
+        } else {
+            this.dirPin.high();
+        }
+        for(int i = 0; i < steps; i++) {
+            Thread.sleep(this.delay);
+            this.stepPin.high();
+            Thread.sleep(this.delay);
+            this.stepPin.low();
+        }
+    }
 }

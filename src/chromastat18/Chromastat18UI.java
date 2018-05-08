@@ -5,8 +5,12 @@
  */
 package chromastat18;
 
+import com.pi4j.io.i2c.I2CFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
@@ -16,12 +20,16 @@ import javax.swing.Timer;
 public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
     // Set up a timer for refreshing the graphics
     private final Timer timer = new Timer(16, this); // 16 in ms
+    private RgbSensor rgbSensor;
+    private LuxSensor luxSensor;
     
     /**
      * Creates the new GUI, and also invokes the timer to start refreshing.
      */
-    public Chromastat18UI() {
+    public Chromastat18UI() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         initComponents();
+        this.rgbSensor = new RgbSensor();
+        this.luxSensor = new LuxSensor((byte)0x39);
         timer.start();
     }
 
@@ -90,7 +98,15 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Chromastat18UI().setVisible(true);
+                try {
+                    new Chromastat18UI().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (I2CFactory.UnsupportedBusNumberException ex) {
+                    Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
