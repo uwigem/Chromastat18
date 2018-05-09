@@ -28,8 +28,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      */
     public Chromastat18UI() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         initComponents();
-        this.rgbSensor = new RgbSensor();
-        this.luxSensor = new LuxSensor((byte)0x39);
+        //this.rgbSensor = new RgbSensor();
+        //this.luxSensor = new LuxSensor((byte)0x39);
         timer.start();
     }
 
