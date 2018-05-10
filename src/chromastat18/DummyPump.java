@@ -26,7 +26,7 @@ public class DummyPump {
      * @param inArgs Map of pins
      * @param mcp 
      */
-    public DummyPump(Map<String, Pin> inArgs, MCP mcp) {
+    public DummyPump() {
         this.maxPosition = 0;
         this.currPosition = 0;
     }
@@ -85,7 +85,9 @@ public class DummyPump {
         }
         this.currPosition = 0;
         this.refill();
+        System.out.println("calibrated");
     }
+    
     
     /**
      * Refill refills the syringe and resets the maximum position of the syringe

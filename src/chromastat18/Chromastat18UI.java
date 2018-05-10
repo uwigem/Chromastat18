@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,23 +28,19 @@ import java.util.Map;
 public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
     // Set up a timer for refreshing the graphics
     private final Timer timer = new Timer(16, this); // 16 in ms
-    // Uncomment/comment this portion for ACTUAL DEVICE
-    // private RgbSensor rgbSensor;
-    // private LuxSensor luxSensor;
-    private final MCP23017GpioProvider mcpProviderOne ;
-    private final MCP23017GpioProvider mcpProviderTwo;
-    
-    private SyringePump pump1;
-    private SyringePump pump2;
-    private SyringePump pump3;
-    
+//    /* Uncomment/comment this portion for ACTUAL DEVICE */
+//    private RgbSensor rgbSensor;
+//    private LuxSensor luxSensor;
+//    private final MCP mcpProviderOne ;
+//    private final MCP mcpProviderTwo;
+//    private ArrayList<SyringePump> pumps = new ArrayList<>();
     
     
     // Uncomment/comment this portion for TESTING
     private DummyRgb colorRead = new DummyRgb();
     private DummyLux luxSensor = new DummyLux();
+    private ArrayList<DummyPump> pumps = new ArrayList<>();
     
-
     /**
      * Creates the new GUI, and also invokes the timer to start refreshing.
      */
@@ -51,12 +48,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         initComponents();
         
         
-        // Uncomment/comment this portion for ACTUAL DEVICE
-        //this.rgbSensor = new RgbSensor();
-        //this.luxSensor = new LuxSensor((byte)0x39);
-        mcpProviderOne = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
-        mcpProviderTwo = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
-        
+//        /* Uncomment/comment this portion for ACTUAL DEVICE */
+//        this.rgbSensor = new RgbSensor();
+//        this.luxSensor = new LuxSensor((byte)0x39);
+//        this.mcpProviderOne = new MCP(0x20);
+//        this.mcpProviderTwo = new MCP(0x21);
+//        this.initPumps();
         this.initPumps();
         
         timer.start();
@@ -71,6 +68,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar2 = new javax.swing.JProgressBar();
+        jLabel5 = new javax.swing.JLabel();
+        jProgressBar4 = new javax.swing.JProgressBar();
+        jLabel7 = new javax.swing.JLabel();
         text1 = new javax.swing.JTextField();
         colorPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -79,6 +80,23 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         colorStringLabel = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel4 = new javax.swing.JLabel();
+        jProgressBar3 = new javax.swing.JProgressBar();
+        jLabel6 = new javax.swing.JLabel();
+        jProgressBar5 = new javax.swing.JProgressBar();
+        jLabel8 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+
+        jProgressBar2.setForeground(new java.awt.Color(51, 51, 255));
+        jProgressBar2.setValue(50);
+
+        jLabel5.setText("Pump 1");
+
+        jProgressBar4.setForeground(new java.awt.Color(51, 51, 255));
+        jProgressBar4.setValue(50);
+
+        jLabel7.setText("Pump 2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -137,6 +155,29 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 
         colorStringLabel.setText("colorstring");
 
+        jProgressBar1.setForeground(new java.awt.Color(51, 51, 255));
+        jProgressBar1.setValue(50);
+
+        jLabel4.setText("Pump 1");
+
+        jProgressBar3.setForeground(new java.awt.Color(51, 51, 255));
+        jProgressBar3.setValue(50);
+
+        jLabel6.setText("Pump 2");
+
+        jProgressBar5.setForeground(new java.awt.Color(51, 51, 255));
+        jProgressBar5.setValue(50);
+
+        jLabel8.setText("Pump 3");
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jButton1.setText("Calibrate pumps");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calibratePump(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,7 +187,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                     .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,8 +200,17 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)))
-                            .addComponent(colorStringLabel))))
-                .addContainerGap(418, Short.MAX_VALUE))
+                            .addComponent(colorStringLabel)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6)
+                            .addComponent(jProgressBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                            .addComponent(jLabel8)
+                            .addComponent(jProgressBar5, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))))
+                .addGap(51, 51, 51))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,24 +220,47 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addGap(7, 7, 7))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(colorStringLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(colorStringLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addGap(7, 7, 7)
+                        .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addGap(7, 7, 7)
+                        .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
                 .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void calibratePump(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibratePump
+        try {
+            this.calibrateSyringes(evt);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_calibratePump
 
     /**
      * @param args the command line arguments
@@ -233,27 +306,44 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     }
     
     public void initPumps() {
-        Map<String, Pin> inarg1 = new HashMap<String, Pin>();
-        Map<String, Pin> inarg2 = new HashMap<String, Pin>();
-        Map<String, Pin> inarg3 = new HashMap<String, Pin>();
-        String[] keys = {"dirPin", "stepPin", "enablePin", "minPin", "maxPin"};
-        Pin[] pins1 = {MCP23017Pin.GPIO_A7, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_B5, MCP23017Pin.GPIO_B1};
-        Pin[] pins2 = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B7, MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B2};
-        Pin[] pins3 = {MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B3};
-        
-        for(int i = 0; i < keys.length; i++) {
-            inarg1.put(keys[i], pins1[i]);
-            inarg2.put(keys[i], pins2[i]);
-            inarg3.put(keys[i], pins3[i]);
+//        Map<String, Pin> inarg1 = new HashMap<String, Pin>();
+//        Map<String, Pin> inarg2 = new HashMap<String, Pin>();
+//        Map<String, Pin> inarg3 = new HashMap<String, Pin>();
+//        String[] keys = {"dirPin", "stepPin", "enablePin", "minPin", "maxPin"};
+//        Pin[] pins1 = {MCP23017Pin.GPIO_A7, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_B5, MCP23017Pin.GPIO_B1};
+//        Pin[] pins2 = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B7, MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B2};
+//        Pin[] pins3 = {MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B3};
+//        SyringePump pump1;
+//        SyringePump pump2;
+//        SyringePump pump3;
+//    
+//    
+//        for(int i = 0; i < keys.length; i++) {
+//            inarg1.put(keys[i], pins1[i]);
+//            inarg2.put(keys[i], pins2[i]);
+//            inarg3.put(keys[i], pins3[i]);
+//        }
+//        
+//        pump1 = new SyringePump(inarg1, mcpProviderOne, mcpProviderTwo);
+//        pump2 = new SyringePump(inarg2, mcpProviderOne, mcpProviderTwo);
+//        pump3 = new SyringePump(inarg3, mcpProviderOne, mcpProviderTwo);
+//        pumps.add(pump1);
+//        pumps.add(pump2);
+//        pumps.add(pump3);
+        for(int i = 0; i < 3; i++) {
+            pumps.add(new DummyPump());
         }
-        
-        
 
-        this.pump1 = new SyringePump();
     }
     
-    public void calibrateSyringes() {
-        
+    public void calibrateSyringes(java.awt.event.ActionEvent evt) throws InterruptedException {
+//        for(SyringePump pump : pumps) {
+//            pump.calibrate();
+//        }
+        for(DummyPump pump : pumps) {
+            pump.calibrate();
+        }
+
     }
     
     /**
@@ -297,13 +387,22 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel brightnessPanel;
     private javax.swing.JPanel colorPanel;
-    private javax.swing.JPanel colorPanel2;
-    private javax.swing.JPanel colorPanel3;
     private javax.swing.JLabel colorStringLabel;
     private javax.swing.JPanel huePanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar jProgressBar2;
+    private javax.swing.JProgressBar jProgressBar3;
+    private javax.swing.JProgressBar jProgressBar4;
+    private javax.swing.JProgressBar jProgressBar5;
     private javax.swing.JTextField text1;
     // End of variables declaration//GEN-END:variables
 }
