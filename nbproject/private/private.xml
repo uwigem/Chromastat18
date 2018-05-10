@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/Chromastat18UI.java</file>
+            <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/DummyPump.java</file>
+            <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/DummyRgb.java</file>
             <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/Chromastat18.java</file>
+            <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/Chromastat18UI.java</file>
+            <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/SyringePump.java</file>
+            <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/LuxSensor.java</file>
+            <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/RgbSensor.java</file>
+            <file>file:/C:/Files/iGEM%202018/Chromastat18/src/chromastat18/DummyLux.java</file>
         </group>
     </open-files>
 </project-private>

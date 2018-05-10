@@ -5,6 +5,10 @@
  */
 package chromastat18;
 
+import com.pi4j.gpio.extension.mcp.MCP23017GpioProvider;
+import com.pi4j.gpio.extension.mcp.MCP23017Pin;
+import com.pi4j.io.gpio.Pin;
+import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * UI Class of Chromastat 18
@@ -22,11 +28,22 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     // Set up a timer for refreshing the graphics
     private final Timer timer = new Timer(16, this); // 16 in ms
     // Uncomment/comment this portion for ACTUAL DEVICE
-//    private RgbSensor rgbSensor;
-//    private LuxSensor luxSensor;
+    // private RgbSensor rgbSensor;
+    // private LuxSensor luxSensor;
+    private final MCP23017GpioProvider mcpProviderOne ;
+    private final MCP23017GpioProvider mcpProviderTwo;
+    
+    private SyringePump pump1;
+    private SyringePump pump2;
+    private SyringePump pump3;
+    
+    
+    
     // Uncomment/comment this portion for TESTING
     private DummyRgb colorRead = new DummyRgb();
     private DummyLux luxSensor = new DummyLux();
+    
+
     /**
      * Creates the new GUI, and also invokes the timer to start refreshing.
      */
@@ -37,8 +54,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         // Uncomment/comment this portion for ACTUAL DEVICE
         //this.rgbSensor = new RgbSensor();
         //this.luxSensor = new LuxSensor((byte)0x39);
+        mcpProviderOne = new MCP23017GpioProvider(I2CBus.BUS_1, 0x20);
+        mcpProviderTwo = new MCP23017GpioProvider(I2CBus.BUS_1, 0x21);
         
-        
+        this.initPumps();
         
         timer.start();
     }
@@ -211,6 +230,30 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 }
             }
         });
+    }
+    
+    public void initPumps() {
+        Map<String, Pin> inarg1 = new HashMap<String, Pin>();
+        Map<String, Pin> inarg2 = new HashMap<String, Pin>();
+        Map<String, Pin> inarg3 = new HashMap<String, Pin>();
+        String[] keys = {"dirPin", "stepPin", "enablePin", "minPin", "maxPin"};
+        Pin[] pins1 = {MCP23017Pin.GPIO_A7, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_B5, MCP23017Pin.GPIO_B1};
+        Pin[] pins2 = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B7, MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B2};
+        Pin[] pins3 = {MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B3};
+        
+        for(int i = 0; i < keys.length; i++) {
+            inarg1.put(keys[i], pins1[i]);
+            inarg2.put(keys[i], pins2[i]);
+            inarg3.put(keys[i], pins3[i]);
+        }
+        
+        
+
+        this.pump1 = new SyringePump();
+    }
+    
+    public void calibrateSyringes() {
+        
     }
     
     /**

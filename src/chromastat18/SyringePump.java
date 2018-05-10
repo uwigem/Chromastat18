@@ -31,13 +31,13 @@ public class SyringePump {
      * @param inArgs Map of pins
      * @param mcp 
      */
-    public SyringePump(Map<String, Pin> inArgs, MCP mcp) {
+    public SyringePump(Map<String, Pin> inArgs, MCP mcp1, MCP mcp2) {
         //Pin dirPin = inArgs.get("test");
-        this.dirPin = mcp.output(inArgs.get("dirPin"), PinState.LOW);
-        this.stepPin = mcp.output(inArgs.get("stepPin"), PinState.LOW);
-        this.enablePin = mcp.output(inArgs.get("enablePin"), PinState.LOW);
-        this.minStop = mcp.input(inArgs.get("minPin"));
-        this.maxStop = mcp.input(inArgs.get("maxPin"));
+        this.dirPin = mcp1.output(inArgs.get("dirPin"), PinState.LOW);
+        this.stepPin = mcp1.output(inArgs.get("stepPin"), PinState.LOW);
+        this.enablePin = mcp1.output(inArgs.get("enablePin"), PinState.LOW);
+        this.minStop = mcp2.input(inArgs.get("minPin"));
+        this.maxStop = mcp2.input(inArgs.get("maxPin"));
         this.maxPosition = 0;
         this.currPosition = 0;
     }
