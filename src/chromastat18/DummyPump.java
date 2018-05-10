@@ -56,7 +56,7 @@ public class DummyPump {
             toAdd = -1;
         } 
         for(int i = 0; i < steps; i++) {
-            if(!this.minPressed() && !this.maxPressed()) {
+            if((dispense && !this.minPressed()) || (!dispense && !this.maxPressed())) {
                 Thread.sleep(this.delay);
                 Thread.sleep(this.delay);
                 this.currPosition = this.currPosition + toAdd;
@@ -88,6 +88,13 @@ public class DummyPump {
         System.out.println("calibrated");
     }
     
+    public void setCurrPos(int pos) {
+        this.currPosition = pos;
+    }
+    
+    public void setMaxPos(int pos) {
+        this.maxPosition = pos;
+    }
     
     /**
      * Refill refills the syringe and resets the maximum position of the syringe
@@ -108,5 +115,9 @@ public class DummyPump {
      */
     public double position() {
         return (double)this.currPosition/this.maxPosition;
+    }
+    
+    public int getCurrPos() {
+        return this.currPosition;
     }
 }
