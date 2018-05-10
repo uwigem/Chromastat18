@@ -12,15 +12,10 @@ import com.pi4j.io.gpio.PinState;
 import java.util.Map;
 
 /**
- * DummyPump simulates a syringe pump
+ * SyringePump allows control of a single syringe pump and its limit switches
  * @author WilliamKwok
  */
-public class SyringePump {
-    private final GpioPinDigitalOutput dirPin;
-    private final GpioPinDigitalOutput stepPin;
-    private final GpioPinDigitalOutput enablePin;
-    private final GpioPinDigitalInput minStop;
-    private final GpioPinDigitalInput maxStop;
+public class DummyPump {
     private int maxPosition;
     private int currPosition;
     int delay = 1;
@@ -31,13 +26,7 @@ public class SyringePump {
      * @param inArgs Map of pins
      * @param mcp 
      */
-    public SyringePump(Map<String, Pin> inArgs, MCP mcp) {
-        //Pin dirPin = inArgs.get("test");
-        this.dirPin = mcp.output(inArgs.get("dirPin"), PinState.LOW);
-        this.stepPin = mcp.output(inArgs.get("stepPin"), PinState.LOW);
-        this.enablePin = mcp.output(inArgs.get("enablePin"), PinState.LOW);
-        this.minStop = mcp.input(inArgs.get("minPin"));
-        this.maxStop = mcp.input(inArgs.get("maxPin"));
+    public DummyPump(Map<String, Pin> inArgs, MCP mcp) {
         this.maxPosition = 0;
         this.currPosition = 0;
     }
@@ -46,14 +35,14 @@ public class SyringePump {
      * @return returns if minimum switch is pressed (empty syringe)
      */
     public boolean minPressed() {
-        return this.minStop.isHigh();
+        return this.currPosition <= 0;
     }
     
     /**
      * @return returns if the maximum switch is pressed (full syringe)
      */
     public boolean maxPressed() {
-        return this.maxStop.isHigh();
+        return this.currPosition >= 3000;
     }
     
     /**
@@ -64,17 +53,12 @@ public class SyringePump {
     public void takeSteps(int steps, boolean dispense) throws InterruptedException {
         int toAdd = 1;
         if(dispense) {
-            this.dirPin.low();
             toAdd = -1;
-        } else {
-            this.dirPin.high();
-        }
+        } 
         for(int i = 0; i < steps; i++) {
             if(!this.minPressed() && !this.maxPressed()) {
                 Thread.sleep(this.delay);
-                this.stepPin.high();
                 Thread.sleep(this.delay);
-                this.stepPin.low();
                 this.currPosition = this.currPosition + toAdd;
             } else {
                 if(this.minPressed()) {
@@ -95,11 +79,9 @@ public class SyringePump {
      */
     public void calibrate() throws InterruptedException {
         while(!this.minPressed()) {
-            this.dirPin.low();
             Thread.sleep(this.delay);
-            this.stepPin.high();
             Thread.sleep(this.delay);
-            this.stepPin.low();
+            this.currPosition = this.currPosition - 1;
         }
         this.currPosition = 0;
         this.refill();
@@ -111,11 +93,8 @@ public class SyringePump {
      */
     public void refill() throws InterruptedException {
         while(!this.maxPressed()) {
-            this.dirPin.high();
             Thread.sleep(this.delay);
-            this.stepPin.high();
             Thread.sleep(this.delay);
-            this.stepPin.low();
             this.currPosition = this.currPosition + 1;
         }
         this.maxPosition = this.currPosition;
