@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
+import java.awt.Color;
 
 /**
  * UI Class of Chromastat 18
@@ -20,16 +21,25 @@ import javax.swing.Timer;
 public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
     // Set up a timer for refreshing the graphics
     private final Timer timer = new Timer(16, this); // 16 in ms
-    private RgbSensor rgbSensor;
-    private LuxSensor luxSensor;
-    
+    // Uncomment/comment this portion for ACTUAL DEVICE
+//    private RgbSensor rgbSensor;
+//    private LuxSensor luxSensor;
+    // Uncomment/comment this portion for TESTING
+    private DummyRgb colorRead = new DummyRgb();
+    private DummyLux luxSensor = new DummyLux();
     /**
      * Creates the new GUI, and also invokes the timer to start refreshing.
      */
     public Chromastat18UI() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         initComponents();
+        
+        
+        // Uncomment/comment this portion for ACTUAL DEVICE
         //this.rgbSensor = new RgbSensor();
         //this.luxSensor = new LuxSensor((byte)0x39);
+        
+        
+        
         timer.start();
     }
 
@@ -43,26 +53,118 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private void initComponents() {
 
         text1 = new javax.swing.JTextField();
+        colorPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        brightnessPanel = new javax.swing.JPanel();
+        huePanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        colorStringLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         text1.setText("0");
+
+        colorPanel.setBackground(new java.awt.Color(0, 0, 0));
+        colorPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        colorPanel.setToolTipText("");
+
+        javax.swing.GroupLayout colorPanelLayout = new javax.swing.GroupLayout(colorPanel);
+        colorPanel.setLayout(colorPanelLayout);
+        colorPanelLayout.setHorizontalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+        colorPanelLayout.setVerticalGroup(
+            colorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+
+        jLabel1.setText("Color");
+
+        brightnessPanel.setBackground(new java.awt.Color(0, 0, 0));
+        brightnessPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        brightnessPanel.setToolTipText("");
+
+        javax.swing.GroupLayout brightnessPanelLayout = new javax.swing.GroupLayout(brightnessPanel);
+        brightnessPanel.setLayout(brightnessPanelLayout);
+        brightnessPanelLayout.setHorizontalGroup(
+            brightnessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+        brightnessPanelLayout.setVerticalGroup(
+            brightnessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+
+        huePanel.setBackground(new java.awt.Color(0, 0, 0));
+        huePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        huePanel.setToolTipText("");
+
+        javax.swing.GroupLayout huePanelLayout = new javax.swing.GroupLayout(huePanel);
+        huePanel.setLayout(huePanelLayout);
+        huePanelLayout.setHorizontalGroup(
+            huePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+        huePanelLayout.setVerticalGroup(
+            huePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+
+        jLabel2.setText("Hue");
+
+        jLabel3.setText("Brightness");
+
+        colorStringLabel.setText("colorstring");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)))
+                            .addComponent(colorStringLabel))))
+                .addContainerGap(418, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(7, 7, 7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(colorStringLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
+                .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -117,10 +219,48 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      * @param e No need to worry about this, the timer calls it automatically. 
      */
     public void actionPerformed(ActionEvent e) {
-        this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
+        try {
+            // Count for framerate
+            this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
+            
+            // Get the color's normalized reading from the sensor
+            // Change DummyRgb to SensorRgb for actual device
+            DummyRgb.ColorReading color;  
+            // SensorRgb.ColorReading color;
+            color = colorRead.getNormalizedReading();           // CHANGE
+            int r = color.getRed();
+            int g = color.getGreen();
+            int b = color.getBlue();
+            int c = color.getClear();
+            
+            // Set color of color panel and colorStringLabel to rgb string
+            Color colorPanelBackground = new Color(r,g,b);
+            colorPanel.setBackground(colorPanelBackground);
+            colorStringLabel.setText(r + "," + g + "," + b);
+            
+            // Set hue panel color
+            huePanel.setBackground(colorRead.readingToHue(color));
+            
+            
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE,null,ex);
+        }
+   
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel brightnessPanel;
+    private javax.swing.JPanel colorPanel;
+    private javax.swing.JPanel colorPanel2;
+    private javax.swing.JPanel colorPanel3;
+    private javax.swing.JLabel colorStringLabel;
+    private javax.swing.JPanel huePanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField text1;
     // End of variables declaration//GEN-END:variables
 }

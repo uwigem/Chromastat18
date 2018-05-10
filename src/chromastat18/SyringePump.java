@@ -21,8 +21,9 @@ public class SyringePump {
     private final GpioPinDigitalOutput enablePin;
     private final GpioPinDigitalInput minStop;
     private final GpioPinDigitalInput maxStop;
+    private int maxPosition;
+    private int currPosition;
     int delay = 1;
-    
     
     /**
      * Constructor for a single syringe pump
@@ -37,6 +38,8 @@ public class SyringePump {
         this.enablePin = mcp.output(inArgs.get("enablePin"), PinState.LOW);
         this.minStop = mcp.input(inArgs.get("minPin"));
         this.maxStop = mcp.input(inArgs.get("maxPin"));
+        this.maxPosition = 0;
+        this.currPosition = 0;
     }
     
     /**
@@ -59,16 +62,70 @@ public class SyringePump {
      * @param dispense direction. If dispensing, this will be true.
      */
     public void takeSteps(int steps, boolean dispense) throws InterruptedException {
+        int toAdd = 1;
         if(dispense) {
             this.dirPin.low();
+            toAdd = -1;
         } else {
             this.dirPin.high();
         }
         for(int i = 0; i < steps; i++) {
+            if(!this.minPressed() && !this.maxPressed()) {
+                Thread.sleep(this.delay);
+                this.stepPin.high();
+                Thread.sleep(this.delay);
+                this.stepPin.low();
+                this.currPosition = this.currPosition + toAdd;
+            } else {
+                if(this.minPressed()) {
+                    this.currPosition = 0;
+                    this.refill();
+                } else {
+                    this.maxPosition = this.currPosition;
+                }
+            }
+        }
+    }
+    
+    /**
+     * Calibrate will move the syringe pump to the minimum position it detects,
+     * then to the maximum, and stores the maximum position, and keeps track
+     * of current position.
+     * @throws InterruptedException 
+     */
+    public void calibrate() throws InterruptedException {
+        while(!this.minPressed()) {
+            this.dirPin.low();
             Thread.sleep(this.delay);
             this.stepPin.high();
             Thread.sleep(this.delay);
             this.stepPin.low();
         }
+        this.currPosition = 0;
+        this.refill();
+    }
+    
+    /**
+     * Refill refills the syringe and resets the maximum position of the syringe
+     * @throws InterruptedException 
+     */
+    public void refill() throws InterruptedException {
+        while(!this.maxPressed()) {
+            this.dirPin.high();
+            Thread.sleep(this.delay);
+            this.stepPin.high();
+            Thread.sleep(this.delay);
+            this.stepPin.low();
+            this.currPosition = this.currPosition + 1;
+        }
+        this.maxPosition = this.currPosition;
+    }
+    
+    /**
+     * Position will give you the percentage of the position the syringe is at
+     * @return Position in terms of percentage full
+     */
+    public double position() {
+        return (double)this.currPosition/this.maxPosition;
     }
 }

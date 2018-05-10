@@ -23,20 +23,16 @@ import java.awt.Color;
 import java.io.IOException;
 
 /**
- * Configures, controls, and takes readings from
- * a single Taos TCS34725 RGB (color) sensor
- * 
- * Note that this sensor's I2C address is fixed
- * at 0x29 in the hardware and cannot be changed.
- * 
- * @author Washington iGEM Team 2017
+ * A placeholder class for testing the UI.
+ * Returns pretend readings from randomly generated numbers.
+ * @author William Kwok
  */
 public class DummyRgb {
     // Scaling multipliers for each channel, configured by setting a white point
-    private double mRed;
-    private double mGreen;
-    private double mBlue;
-    private double mClear;
+    private double mRed = 1;
+    private double mGreen = 1;
+    private double mBlue = 1;
+    private double mClear = 1;
 
     public DummyRgb()
             throws IOException, I2CFactory.UnsupportedBusNumberException {
