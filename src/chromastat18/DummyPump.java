@@ -85,15 +85,6 @@ public class DummyPump {
         }
         this.currPosition = 0;
         this.refill();
-        System.out.println("calibrated");
-    }
-    
-    public void setCurrPos(int pos) {
-        this.currPosition = pos;
-    }
-    
-    public void setMaxPos(int pos) {
-        this.maxPosition = pos;
     }
     
     /**
@@ -115,9 +106,5 @@ public class DummyPump {
      */
     public double position() {
         return (double)this.currPosition/this.maxPosition;
-    }
-    
-    public int getCurrPos() {
-        return this.currPosition;
     }
 }

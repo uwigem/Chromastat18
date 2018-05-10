@@ -341,41 +341,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //            pump.calibrate();
 //        }
         for(DummyPump pump : pumps) {
-            
-            while(!pump.minPressed()) {
-                pump.takeSteps(1,true);
-                System.out.println("calibrating pump");
-            }
-            pump.setCurrPos(0);
-            while(!pump.maxPressed()) {
-                pump.takeSteps(1, false);
-                System.out.println("fill");
-            }
-            pump.setMaxPos(pump.getCurrPos());
-            
-            
-//            while(!this.minPressed()) {
-//            this.dirPin.low();
-//            Thread.sleep(this.delay);
-//            this.stepPin.high();
-//            Thread.sleep(this.delay);
-//            this.stepPin.low();
-//        }
-//        this.currPosition = 0;
-//        
-//        while(!this.maxPressed()) {
-//            this.dirPin.high();
-//            Thread.sleep(this.delay);
-//            this.stepPin.high();
-//            Thread.sleep(this.delay);
-//            this.stepPin.low();
-//            this.currPosition = this.currPosition + 1;
-//        }
-//        this.maxPosition = this.currPosition;
-            
-            
-            
-            
+            pump.calibrate();
         }
 
     }
