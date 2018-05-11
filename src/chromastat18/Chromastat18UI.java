@@ -30,7 +30,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private final Timer timer = new Timer(16, this); // 16 in ms
     
     
-    
 //    /* Uncomment/comment this portion for ACTUAL DEVICE */
 //    private RgbSensor rgbSensor;
 //    private LuxSensor luxSensor;
@@ -42,7 +41,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     // Uncomment/comment this portion for TESTING
     private DummyRgb colorRead = new DummyRgb();
     private DummyLux luxSensor = new DummyLux();
-    private ArrayList<DummyPump> pumps = new ArrayList<>();
+//    private ArrayList<DummyPump> pumps = new ArrayList<>();
+    private DummyPumpController dpc = new DummyPumpController();
     
     /**
      * Creates the new GUI, and also invokes the timer to start refreshing.
@@ -61,6 +61,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         this.initPumps();
         
         timer.start();
+        dpc.start();
     }
 
     /**
@@ -278,6 +279,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         try {
             calibrationMessage.setVisible(true);
             this.calibrateSyringes(evt);
+            calibrationMessage.setVisible(false);
         } catch (InterruptedException ex) {
             Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -351,9 +353,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        pumps.add(pump1);
 //        pumps.add(pump2);
 //        pumps.add(pump3);
-        for(int i = 0; i < 3; i++) {
-            pumps.add(new DummyPump());
-        }
+//        for(int i = 0; i < 3; i++) {
+//            pumps.add(new DummyPump());
+//        }
 
     }
     
@@ -361,11 +363,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        for(SyringePump pump : pumps) {
 //            pump.calibrate();
 //        }
-        for(DummyPump pump : pumps) {
-            pump.calibrate();
-        }
-        calibrationMessage.setVisible(false);
-
+//        for(DummyPump pump : pumps) {
+//            pump.calibrate();
+//        }
+//        calibrationMessage.setVisible(false);
+//            this.dpc.calibrate();
+this.dpc.setNewGoal(0, -1000);
     }
     
     /**
@@ -377,7 +380,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         try {
             // Count for framerate
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
-            
+            if(Integer.parseInt(this.text1.getText()) % 60 == 0 && dpc.pumpMoving()) {
+                System.out.println("pump moving");
+            }
             // Get the color's normalized reading from the sensor
             // Change DummyRgb to SensorRgb for actual device
             DummyRgb.ColorReading color;  

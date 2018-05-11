@@ -18,6 +18,7 @@ import java.util.Map;
 public class DummyPump {
     private int maxPosition;
     private int currPosition;
+    private int goal = 0;
     int delay = 1;
     
     /**
@@ -27,7 +28,7 @@ public class DummyPump {
      * @param mcp 
      */
     public DummyPump() {
-        this.maxPosition = 0;
+        this.maxPosition = 3000;
         this.currPosition = 0;
     }
     
@@ -109,15 +110,34 @@ public class DummyPump {
     }
 
     void setNewGoal(int newGoal) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
+        this.goal = newGoal;
     }
 
     boolean goalMismatch() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.goal != 0;
     }
 
-    void move() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void move() throws InterruptedException {
+        int toAdd = 1;
+        if(goal < 0) {
+            toAdd = -1;
+        }
+        while(this.goal != 0) {
+            if((toAdd == 1 && !this.maxPressed()) || (toAdd == -1 && !this.minPressed())) {
+                Thread.sleep(this.delay);
+                Thread.sleep(this.delay);
+                this.currPosition = this.currPosition + toAdd;
+                this.goal = this.goal - toAdd;
+            } else {
+                if(this.minPressed()) {
+                    this.currPosition = 0;
+                    this.refill();
+                } else {
+                    this.maxPosition = this.currPosition;
+                    this.goal = 0;
+                }
+            }
+        }
+        
     }
 }
