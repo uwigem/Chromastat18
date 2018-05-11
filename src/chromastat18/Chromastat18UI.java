@@ -28,6 +28,9 @@ import java.util.Map;
 public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
     // Set up a timer for refreshing the graphics
     private final Timer timer = new Timer(16, this); // 16 in ms
+    
+    
+    
 //    /* Uncomment/comment this portion for ACTUAL DEVICE */
 //    private RgbSensor rgbSensor;
 //    private LuxSensor luxSensor;
@@ -46,6 +49,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      */
     public Chromastat18UI() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         initComponents();
+        calibrationMessage.setVisible(false);
         
         
 //        /* Uncomment/comment this portion for ACTUAL DEVICE */
@@ -87,6 +91,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         jProgressBar5 = new javax.swing.JProgressBar();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        calibrationMessage = new javax.swing.JTextPane();
 
         jProgressBar2.setForeground(new java.awt.Color(51, 51, 255));
         jProgressBar2.setValue(50);
@@ -178,6 +184,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             }
         });
 
+        jScrollPane1.setToolTipText("");
+
+        calibrationMessage.setEditable(false);
+        calibrationMessage.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        calibrationMessage.setText("Calibrating");
+        calibrationMessage.setToolTipText("");
+        jScrollPane1.setViewportView(calibrationMessage);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,6 +225,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                             .addComponent(jLabel8)
                             .addComponent(jProgressBar5, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))))
                 .addGap(51, 51, 51))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(230, 230, 230))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +265,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addComponent(jLabel8)
                         .addGap(7, 7, 7)
                         .addComponent(jProgressBar5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
                 .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -256,6 +276,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 
     private void calibratePump(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibratePump
         try {
+            calibrationMessage.setVisible(true);
             this.calibrateSyringes(evt);
         } catch (InterruptedException ex) {
             Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
@@ -343,6 +364,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         for(DummyPump pump : pumps) {
             pump.calibrate();
         }
+        calibrationMessage.setVisible(false);
 
     }
     
@@ -386,6 +408,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel brightnessPanel;
+    private javax.swing.JTextPane calibrationMessage;
     private javax.swing.JPanel colorPanel;
     private javax.swing.JLabel colorStringLabel;
     private javax.swing.JPanel huePanel;
@@ -403,6 +426,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private javax.swing.JProgressBar jProgressBar3;
     private javax.swing.JProgressBar jProgressBar4;
     private javax.swing.JProgressBar jProgressBar5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField text1;
     // End of variables declaration//GEN-END:variables
 }

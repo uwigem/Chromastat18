@@ -107,4 +107,17 @@ public class DummyPump {
     public double position() {
         return (double)this.currPosition/this.maxPosition;
     }
+
+    void setNewGoal(int newGoal) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+
+    boolean goalMismatch() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void move() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
