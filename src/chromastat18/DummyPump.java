@@ -20,7 +20,6 @@ public class DummyPump {
     private int currPosition;
     private int goal = 0;
     int delay = 1;
-    
     /**
      * Constructor for a single syringe pump
      * @pre inArgs must have ONLY these keys: dirPin, stepPin, enablePin, minPin, maxPin
@@ -28,8 +27,8 @@ public class DummyPump {
      * @param mcp 
      */
     public DummyPump() {
-        this.maxPosition = 3000;
-        this.currPosition = (int)(Math.random() * 3000);
+        this.maxPosition = 1000;
+        this.currPosition = (int)(Math.random() * this.maxPosition);
     }
     
     /**
@@ -43,7 +42,7 @@ public class DummyPump {
      * @return returns if the maximum switch is pressed (full syringe)
      */
     public boolean maxPressed() {
-        return this.currPosition >= 3000;
+        return this.currPosition >= 1000;
     }
     
     /**

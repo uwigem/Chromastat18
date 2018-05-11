@@ -275,12 +275,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     }// </editor-fold>//GEN-END:initComponents
 
     private void calibratePump(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibratePump
-        try {
-            calibrationMessage.setVisible(true);
-            this.calibrateSyringes(evt);
-            calibrationMessage.setVisible(false);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
+        if(!dpc.isCalibrated()) {
+                calibrationMessage.setVisible(true);
+                dpc.start();
         }
     }//GEN-LAST:event_calibratePump
 
@@ -357,19 +354,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        }
 
     }
-    
-    public void calibrateSyringes(java.awt.event.ActionEvent evt) throws InterruptedException {
-//        for(SyringePump pump : pumps) {
-//            pump.calibrate();
-//        }
-//        for(DummyPump pump : pumps) {
-//            pump.calibrate();
-//        }
-//        calibrationMessage.setVisible(false);
-//            this.dpc.calibrate();
-//this.dpc.setNewGoal(0, -1000);
-            dpc.start();
-    }
+   
     
     /**
      * This method is called every few milliseconds, dependent on the
@@ -385,6 +370,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             if(Integer.parseInt(this.text1.getText()) % 20 == 0 && dpc.pumpMoving() != -1) {
                 System.out.println("pump #" + dpc.pumpMoving() + " moving. Position: " + dpc.getPumpPos(dpc.pumpMoving()));
             }
+            
+            if(dpc.isCalibrated()) {
+                calibrationMessage.setVisible(false);
+            }
+            
+            
             
             // Get the color's normalized reading from the sensor
             // Change DummyRgb to SensorRgb for actual device
