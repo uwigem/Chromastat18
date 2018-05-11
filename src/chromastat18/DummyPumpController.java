@@ -15,29 +15,34 @@ import java.util.logging.Logger;
  */
 public class DummyPumpController extends Thread {
     private ArrayList<DummyPump> pumps = new ArrayList<>();
-    private boolean pumpMoving = false;
-    private boolean calibrated = true;
+    private int pumpMoving = -1;
+    private boolean calibrated = false;
     public DummyPumpController() {
         for(int i = 0; i < 3; i++) {
             pumps.add(new DummyPump());
         }
     }
     
-    public boolean pumpMoving() {
+    public int pumpMoving() {
         return this.pumpMoving;
     }
     
+    public double getPumpPos(int pumpNumber) {
+       return this.pumps.get(pumpNumber).position();
+    }
+    
     public void setNewGoal(int pumpNumber, int newGoal) {
-        if(!this.pumpMoving) {
+        if(this.pumpMoving == -1) {
             pumps.get(pumpNumber).setNewGoal(newGoal);
         }
     }
     
     public void calibrate() throws InterruptedException {
-        for(DummyPump pump : pumps) {
-            System.out.println("calibrating");
-            pump.calibrate();
+        for(int i = 0; i < 3; i++) {
+            this.pumpMoving = i;
+            this.pumps.get(i).calibrate();
         }
+        this.pumpMoving = -1;
         this.calibrated = true;
     }
     
@@ -52,20 +57,25 @@ public class DummyPumpController extends Thread {
                 int pumpMovingIndex = pumpsMoving.indexOf(true);
                 if(pumpMovingIndex >= 0) {
                     try {
-                        this.pumpMoving = true;
+                        this.pumpMoving = pumpMovingIndex;
                         pumps.get(pumpMovingIndex).move();
-                       
                     } catch (InterruptedException ex) {
                         Logger.getLogger(DummyPumpController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    System.out.println("idle");
-                    this.pumpMoving = false;
+                    this.pumpMoving = -1;
                     try {
                         Thread.sleep(1);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(DummyPumpController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+            } else {
+                try {
+                    this.calibrate();
+                    
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DummyPumpController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

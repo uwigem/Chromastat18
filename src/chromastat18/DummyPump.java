@@ -29,7 +29,7 @@ public class DummyPump {
      */
     public DummyPump() {
         this.maxPosition = 3000;
-        this.currPosition = 0;
+        this.currPosition = (int)(Math.random() * 3000);
     }
     
     /**

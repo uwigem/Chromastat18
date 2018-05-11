@@ -61,7 +61,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         this.initPumps();
         
         timer.start();
-        dpc.start();
     }
 
     /**
@@ -368,7 +367,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        }
 //        calibrationMessage.setVisible(false);
 //            this.dpc.calibrate();
-this.dpc.setNewGoal(0, -1000);
+//this.dpc.setNewGoal(0, -1000);
+            dpc.start();
     }
     
     /**
@@ -380,9 +380,12 @@ this.dpc.setNewGoal(0, -1000);
         try {
             // Count for framerate
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
-            if(Integer.parseInt(this.text1.getText()) % 60 == 0 && dpc.pumpMoving()) {
-                System.out.println("pump moving");
+            
+            // If the pump is moving, log out that it's moving.
+            if(Integer.parseInt(this.text1.getText()) % 20 == 0 && dpc.pumpMoving() != -1) {
+                System.out.println("pump #" + dpc.pumpMoving() + " moving. Position: " + dpc.getPumpPos(dpc.pumpMoving()));
             }
+            
             // Get the color's normalized reading from the sensor
             // Change DummyRgb to SensorRgb for actual device
             DummyRgb.ColorReading color;  
