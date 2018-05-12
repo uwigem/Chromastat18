@@ -109,6 +109,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         pump1minus = new javax.swing.JButton();
         pump2minus = new javax.swing.JButton();
         pump3minus = new javax.swing.JButton();
+        whitePoint = new javax.swing.JButton();
 
         jProgressBar2.setForeground(new java.awt.Color(51, 51, 255));
         jProgressBar2.setValue(50);
@@ -250,6 +251,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             }
         });
 
+        whitePoint.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        whitePoint.setText("Set white point");
+        whitePoint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                whitePointcalibratePump(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -258,8 +267,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                        .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(whitePoint, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1))
@@ -271,8 +284,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)))
-                            .addComponent(colorStringLabel)
-                            .addComponent(calibrationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(colorStringLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(calibrationButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -291,10 +304,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(pump2plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pump3plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pump1plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(pump1plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -347,6 +357,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addComponent(colorStringLabel)
                         .addGap(18, 18, 18)
                         .addComponent(calibrationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(whitePoint, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68))))
@@ -389,6 +401,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private void pump3plusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pump3plusMouseClicked
         manualMove(evt);        // TODO add your handling code here:
     }//GEN-LAST:event_pump3plusMouseClicked
+
+    private void whitePointcalibratePump(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_whitePointcalibratePump
+        try {
+            colorRead.setWhitePoint();
+        } catch (Exception ex) {
+            Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_whitePointcalibratePump
 
     public void manualMove(java.awt.event.MouseEvent evt) {
         int count = 0;
@@ -594,5 +614,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private javax.swing.JButton pump3minus;
     private javax.swing.JButton pump3plus;
     private javax.swing.JTextField text1;
+    private javax.swing.JButton whitePoint;
     // End of variables declaration//GEN-END:variables
 }
