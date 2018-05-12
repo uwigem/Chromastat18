@@ -56,8 +56,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         initComponents();
         
 //        /* Uncomment/comment this portion for ACTUAL DEVICE */
-//        this.rgbSensor = new RgbSensor();
-//        this.luxSensor = new LuxSensor((byte)0x39);
+        this.colorRead = new RgbSensor();
+        this.luxSensor = new LuxSensor((byte)0x39);
 //        this.mcpProviderOne = new MCP(0x20);
 //        this.mcpProviderTwo = new MCP(0x21);
 //        this.initPumps();
