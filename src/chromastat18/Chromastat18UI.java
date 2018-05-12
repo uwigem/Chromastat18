@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JButton;
 import javax.swing.JProgressBar;
 
 /**
@@ -29,6 +30,7 @@ import javax.swing.JProgressBar;
 public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
     // Set up a timer for refreshing the graphics
     private final Timer timer = new Timer(16, this); // 16 in ms
+    private int count = 0;
     
 //    /* Uncomment/comment this portion for ACTUAL DEVICE */
 //    private RgbSensor rgbSensor;
@@ -44,6 +46,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //    private ArrayList<DummyPump> pumps = new ArrayList<>();
     private DummyPumpController dpc = new DummyPumpController();
     ArrayList<JProgressBar> pumpBars = new ArrayList<>();
+    ArrayList<JButton> pumpMinus = new ArrayList<>();
+    ArrayList<JButton> pumpPlus = new ArrayList<>();
             
     /**
      * Creates the new GUI, and also invokes the timer to start refreshing.
@@ -63,6 +67,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         pumpBars.add(pump1Bar);
         pumpBars.add(pump2Bar);
         pumpBars.add(pump3Bar);
+        pumpMinus.add(pump1minus);
+        pumpMinus.add(pump2minus);
+        pumpMinus.add(pump3minus);
+        pumpPlus.add(pump1plus);
+        pumpPlus.add(pump2plus);
+        pumpPlus.add(pump3plus);
     }
 
     /**
@@ -93,6 +103,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         pump3Bar = new javax.swing.JProgressBar();
         jLabel8 = new javax.swing.JLabel();
         calibrationButton = new javax.swing.JButton();
+        pump1plus = new javax.swing.JButton();
+        pump2plus = new javax.swing.JButton();
+        pump3plus = new javax.swing.JButton();
+        pump1minus = new javax.swing.JButton();
+        pump2minus = new javax.swing.JButton();
+        pump3minus = new javax.swing.JButton();
 
         jProgressBar2.setForeground(new java.awt.Color(51, 51, 255));
         jProgressBar2.setValue(50);
@@ -164,6 +180,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         pump1Bar.setForeground(new java.awt.Color(51, 51, 255));
         pump1Bar.setMaximum(1000);
         pump1Bar.setValue(500);
+        pump1Bar.setAlignmentY(0.0F);
 
         jLabel4.setText("Pump 1");
 
@@ -184,6 +201,52 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         calibrationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calibratePump(evt);
+            }
+        });
+
+        pump1plus.setText("+");
+        pump1plus.setAlignmentY(0.0F);
+        pump1plus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pump1plusMouseClicked(evt);
+            }
+        });
+
+        pump2plus.setText("+");
+        pump2plus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pump2plusMouseClicked(evt);
+            }
+        });
+
+        pump3plus.setText("+");
+        pump3plus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pump3plusMouseClicked(evt);
+            }
+        });
+
+        pump1minus.setText("-");
+        pump1minus.setAlignmentY(0.0F);
+        pump1minus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pump1minusMouseClicked(evt);
+            }
+        });
+
+        pump2minus.setText("-");
+        pump2minus.setAlignmentY(0.0F);
+        pump2minus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pump2minusMouseClicked(evt);
+            }
+        });
+
+        pump3minus.setText("-");
+        pump3minus.setAlignmentY(0.0F);
+        pump3minus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pump3minusMouseClicked(evt);
             }
         });
 
@@ -211,7 +274,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                     .addComponent(jLabel3)))
                             .addComponent(colorStringLabel)
                             .addComponent(calibrationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(pump1minus, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                            .addComponent(pump2minus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pump3minus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
                             .addComponent(pump1Bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -219,7 +287,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                             .addComponent(pump2Bar, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                             .addComponent(jLabel8)
                             .addComponent(pump3Bar, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))))
-                .addGap(51, 51, 51))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pump2plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pump3plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pump1plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +309,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,20 +317,39 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                             .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(colorStringLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(calibrationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(calibrationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pump1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pump1Bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pump1plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pump1minus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
-                        .addGap(7, 7, 7)
-                        .addComponent(pump2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(pump2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pump2plus, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pump2minus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addGap(7, 7, 7)
-                        .addComponent(pump3Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
-                .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pump3Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pump3plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(271, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pump3minus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(272, 272, 272))))))
         );
 
         pack();
@@ -268,9 +360,55 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 calibrationButton.setText("Calibrating...");
                 calibrationButton.setEnabled(false);
                 dpc.start();
+        } else {
+            dpc.recalibrate();
         }
     }//GEN-LAST:event_calibratePump
 
+    private void pump1minusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pump1minusMouseClicked
+        manualMove(evt);
+// TODO add your handling code here:
+    }//GEN-LAST:event_pump1minusMouseClicked
+
+    private void pump2minusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pump2minusMouseClicked
+        manualMove(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_pump2minusMouseClicked
+
+    private void pump3minusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pump3minusMouseClicked
+        manualMove(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_pump3minusMouseClicked
+
+    private void pump1plusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pump1plusMouseClicked
+        manualMove(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_pump1plusMouseClicked
+
+    private void pump2plusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pump2plusMouseClicked
+        manualMove(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_pump2plusMouseClicked
+
+    private void pump3plusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pump3plusMouseClicked
+        manualMove(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_pump3plusMouseClicked
+
+    public void manualMove(java.awt.event.MouseEvent evt) {
+        int count = 0;
+        for(JButton button : pumpMinus) {
+            if(button == evt.getComponent()) {
+                dpc.setNewGoal(count, -100);
+            } else {
+                count++;
+            }
+        }
+        count = 0;
+        for(JButton button : pumpPlus) {
+            if(button == evt.getComponent()) {
+                dpc.setNewGoal(count, 100);
+            } else {
+                count++;
+            }
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -354,7 +492,19 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     public void actionPerformed(ActionEvent e) {
         try {
             // Count for framerate
+            this.count = this.count+1;
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
+            
+            // run whatever is in here every 2000ms (2 seconds)
+            if(this.count % 2000 == 0) {
+                //take a reading
+                //dep on color, select a pump to move. 
+                // if the pump isn't moving, set new goal to be a calculated number
+                // if it is moving, do nothing.
+                // have pumpcontroller have an internal timer that forces a pause after movement.
+            }
+            
+            
             
             // grab pumpMovingValue;
             int pumpVal = dpc.pumpMoving();
@@ -364,8 +514,25 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 System.out.println("pump #" + dpc.pumpMoving() + " moving. Position: " + dpc.getPumpPos(pumpVal));
             }
             
+            if(pumpVal != -1) {
+                for(JButton pumpM : pumpMinus) {
+                    pumpM.setEnabled(false);
+                }
+                for(JButton pumpM : pumpPlus) {
+                    pumpM.setEnabled(false);
+                }
+            } else {
+                for(JButton pumpM : pumpMinus) {
+                    pumpM.setEnabled(true);
+                }
+                for(JButton pumpM : pumpPlus) {
+                    pumpM.setEnabled(true);
+                }
+            }
+            
             if(dpc.isCalibrated()) {
-                calibrationButton.setText("Calibrated!");
+                calibrationButton.setText("Re-calibrate");
+                calibrationButton.setEnabled(true);
             }
             
             if(pumpVal != -1) {
@@ -417,8 +584,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JProgressBar jProgressBar4;
     private javax.swing.JProgressBar pump1Bar;
+    private javax.swing.JButton pump1minus;
+    private javax.swing.JButton pump1plus;
     private javax.swing.JProgressBar pump2Bar;
+    private javax.swing.JButton pump2minus;
+    private javax.swing.JButton pump2plus;
     private javax.swing.JProgressBar pump3Bar;
+    private javax.swing.JButton pump3minus;
+    private javax.swing.JButton pump3plus;
     private javax.swing.JTextField text1;
     // End of variables declaration//GEN-END:variables
 }

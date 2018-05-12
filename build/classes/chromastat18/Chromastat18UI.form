@@ -76,7 +76,13 @@
                           <Component id="colorStringLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="calibrationButton" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="84" max="32767" attributes="0"/>
+                      <EmptySpace pref="30" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="pump1minus" pref="41" max="32767" attributes="0"/>
+                          <Component id="pump2minus" alignment="1" max="32767" attributes="0"/>
+                          <Component id="pump3minus" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <Component id="pump1Bar" max="32767" attributes="0"/>
@@ -87,7 +93,13 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="pump2plus" max="32767" attributes="0"/>
+                  <Component id="pump3plus" max="32767" attributes="0"/>
+                  <Component id="pump1plus" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -110,8 +122,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="huePanel" min="-2" max="-2" attributes="0"/>
                           <Component id="colorPanel" min="-2" max="-2" attributes="0"/>
@@ -119,23 +131,51 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="colorStringLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="calibrationButton" min="-2" pref="78" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="text1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="pump1Bar" min="-2" pref="42" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="pump1Bar" max="32767" attributes="0"/>
+                          <Component id="pump1plus" max="32767" attributes="0"/>
+                          <Component id="pump1minus" alignment="1" pref="42" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                      <Component id="pump2Bar" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              <Component id="pump2Bar" min="-2" pref="42" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="pump2plus" pref="44" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="pump2minus" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                      <Component id="pump3Bar" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="pump3Bar" min="-2" pref="42" max="-2" attributes="0"/>
+                                  <Component id="pump3plus" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="271" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="pump3minus" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="252" max="32767" attributes="0"/>
-              <Component id="text1" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -251,6 +291,7 @@
         </Property>
         <Property name="maximum" type="int" value="1000"/>
         <Property name="value" type="int" value="500"/>
+        <Property name="alignmentY" type="float" value="0.0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -295,6 +336,58 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calibratePump"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="pump1plus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="+"/>
+        <Property name="alignmentY" type="float" value="0.0"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pump1plusMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="pump2plus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="+"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pump2plusMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="pump3plus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="+"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pump3plusMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="pump1minus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="-"/>
+        <Property name="alignmentY" type="float" value="0.0"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pump1minusMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="pump2minus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="-"/>
+        <Property name="alignmentY" type="float" value="0.0"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pump2minusMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="pump3minus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="-"/>
+        <Property name="alignmentY" type="float" value="0.0"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pump3minusMouseClicked"/>
       </Events>
     </Component>
   </SubComponents>

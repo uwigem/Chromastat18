@@ -20,6 +20,7 @@ public class DummyPump {
     private int currPosition;
     private int goal = 0;
     int delay = 1;
+    
     /**
      * Constructor for a single syringe pump
      * @pre inArgs must have ONLY these keys: dirPin, stepPin, enablePin, minPin, maxPin
@@ -85,6 +86,7 @@ public class DummyPump {
         }
         this.currPosition = 0;
         this.refill();
+        this.goal = 0;
     }
     
     /**
@@ -137,6 +139,6 @@ public class DummyPump {
                 }
             }
         }
-        
+        Thread.sleep(2000); // force a pause after movement
     }
 }

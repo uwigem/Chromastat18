@@ -50,6 +50,10 @@ public class DummyPumpController extends Thread {
         this.calibrated = true;
     }
     
+    public void recalibrate() {
+        this.calibrated = false;
+    }
+    
     @Override
     public void run() {
         while(true) {
