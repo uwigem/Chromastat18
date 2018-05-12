@@ -76,7 +76,7 @@
                           <Component id="colorStringLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="calibrationButton" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="30" max="32767" attributes="0"/>
+                      <EmptySpace pref="84" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="pump1minus" pref="41" max="32767" attributes="0"/>
                           <Component id="pump2minus" alignment="1" max="32767" attributes="0"/>

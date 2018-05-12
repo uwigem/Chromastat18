@@ -274,7 +274,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                     .addComponent(jLabel3)))
                             .addComponent(colorStringLabel)
                             .addComponent(calibrationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(pump1minus, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                             .addComponent(pump2minus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
