@@ -33,16 +33,16 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private int count = 0;
     
 //    /* Uncomment/comment this portion for ACTUAL DEVICE */
-//    private RgbSensor rgbSensor;
-//    private LuxSensor luxSensor;
+    private RgbSensor colorRead;
+    private LuxSensor luxSensor;
 //    private final MCP mcpProviderOne ;
 //    private final MCP mcpProviderTwo;
-//    private ArrayList<SyringePump> pumps = new ArrayList<>();
+   //   private PumpController pc;
     
     
     // Uncomment/comment this portion for TESTING
-    private DummyRgb colorRead = new DummyRgb();
-    private DummyLux luxSensor = new DummyLux();
+//    private DummyRgb colorRead = new DummyRgb();
+//    private DummyLux luxSensor = new DummyLux();
 //    private ArrayList<DummyPump> pumps = new ArrayList<>();
     private DummyPumpController dpc = new DummyPumpController();
     ArrayList<JProgressBar> pumpBars = new ArrayList<>();
@@ -496,13 +496,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
             
             // run whatever is in here every 2000ms (2 seconds)
-            if(this.count % 2000 == 0) {
+            // worry about this later
+            //if(this.count % 2000 == 0) {
                 //take a reading
                 //dep on color, select a pump to move. 
                 // if the pump isn't moving, set new goal to be a calculated number
                 // if it is moving, do nothing.
                 // have pumpcontroller have an internal timer that forces a pause after movement.
-            }
+            //}
             
             
             
@@ -541,8 +542,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             
             // Get the color's normalized reading from the sensor
             // Change DummyRgb to SensorRgb for actual device
-            DummyRgb.ColorReading color;  
-            // SensorRgb.ColorReading color;
+            //DummyRgb.ColorReading color;  
+            RgbSensor.ColorReading color;
             color = colorRead.getNormalizedReading();           // CHANGE
             int r = color.getRed();
             int g = color.getGreen();

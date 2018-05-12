@@ -23,6 +23,7 @@ public class SyringePump {
     private final GpioPinDigitalInput maxStop;
     private int maxPosition;
     private int currPosition;
+    private int goal = 0;
     int delay = 1;
     
     /**
@@ -103,6 +104,7 @@ public class SyringePump {
         }
         this.currPosition = 0;
         this.refill();
+        this.goal = 0;
     }
     
     /**
@@ -128,4 +130,53 @@ public class SyringePump {
     public double position() {
         return (double)this.currPosition/this.maxPosition;
     }
+    
+    /**
+     * Sets a new goal.
+     * @param newGoal amount to move the syringe
+     */
+    void setNewGoal(int newGoal) {
+        this.goal = newGoal;
+    }
+    
+    /**
+     * @return if there is still some movement the pump must make
+     */
+    boolean goalMismatch() {
+        return this.goal != 0;
+    }
+    
+    /**
+     * Move will move the syringe pump to the set goal, if there is one. 
+     * Otherwise, it'll just do nothing. It refills automatically as well.
+     * @throws InterruptedException 
+     */
+    void move() throws InterruptedException {
+        int toAdd = 1;
+        this.dirPin.high();
+        if(goal < 0) {
+            toAdd = -1;
+            this.dirPin.low();
+        }
+        while(this.goal != 0) {
+            if((toAdd == 1 && !this.maxPressed()) || (toAdd == -1 && !this.minPressed())) {
+                Thread.sleep(this.delay);
+                this.stepPin.high();
+                Thread.sleep(this.delay);
+                this.stepPin.low();
+                this.currPosition = this.currPosition + toAdd;
+                this.goal = this.goal - toAdd;
+            } else {
+                if(this.minPressed()) {
+                    this.currPosition = 0;
+                    this.refill();
+                } else {
+                    this.maxPosition = this.currPosition;
+                    this.goal = 0;
+                }
+            }
+        }
+        Thread.sleep(2000); // force a pause after movement
+    }
+    
 }
