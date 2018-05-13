@@ -95,11 +95,13 @@ public class SyringePump {
      * @throws InterruptedException 
      */
     public void calibrate() throws InterruptedException {
-        this.dirPin.low();
+        for(int i = 0; i < 1000; i++) {
+            this.dirPin.low();
             Thread.sleep(this.delay);
             this.stepPin.high();
             Thread.sleep(this.delay);
             this.stepPin.low();
+        }
         while(!this.minPressed()) {
             this.dirPin.low();
             Thread.sleep(this.delay);
