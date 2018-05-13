@@ -105,6 +105,7 @@ public class SyringePump {
      */
     public void calibrate() throws InterruptedException {
         while(!this.minPressed()) {
+            System.out.println("getting here3");
             this.dirPin.low();
             Thread.sleep(this.delay);
             this.stepPin.high();
