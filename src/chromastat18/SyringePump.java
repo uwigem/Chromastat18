@@ -111,10 +111,10 @@ public class SyringePump {
             Thread.sleep(this.delay);
             this.stepPin.low();
             if(this.minPressed()) {
-                break;
+                System.out.println("getting here");
             }
         }
-        
+        System.out.println("getting here2");
         this.currPosition = 0;
         this.refill();
         this.goal = 0;
