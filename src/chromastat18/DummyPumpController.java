@@ -42,25 +42,25 @@ public class DummyPumpController extends Thread {
         Map<String, Pin> inarg2 = new HashMap<>();
         Map<String, Pin> inarg3 = new HashMap<>();
         String[] keys = {"dirPin", "stepPin", "enablePin", "minPin", "maxPin"};
-        Pin[] pins1 = {MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A2};
-        //Pin[] pins2 = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B7, MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B2};
+        //Pin[] pins1 = {MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A2};
+        Pin[] pins2 = {MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A3};
         //Pin[] pins3 = {MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B3};
-        SyringePump pump1;
-        //SyringePump pump2;
+        //SyringePump pump1;
+        SyringePump pump2;
         //SyringePump pump3;
     
     
         for(int i = 0; i < keys.length; i++) {
-            inarg1.put(keys[i], pins1[i]);
-           // inarg2.put(keys[i], pins2[i]);
+//            inarg1.put(keys[i], pins1[i]);
+            inarg2.put(keys[i], pins2[i]);
            // inarg3.put(keys[i], pins3[i]);
         }
         
-        pump1 = new SyringePump(inarg1, mcpProviderOne, mcpProviderTwo);
-        //pump2 = new SyringePump(inarg2, mcpProviderOne, mcpProviderTwo);
+        //pump1 = new SyringePump(inarg1, mcpProviderOne, mcpProviderTwo);
+        pump2 = new SyringePump(inarg2, mcpProviderOne, mcpProviderTwo);
         //pump3 = new SyringePump(inarg3, mcpProviderOne, mcpProviderTwo);
-        pumps2.add(pump1);
-        //pumps2.add(pump2);
+//        pumps2.add(pump1);
+        pumps2.add(pump2);
         //pumps2.add(pump3);
         System.out.println("got here");
     }
