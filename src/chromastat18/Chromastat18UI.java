@@ -51,6 +51,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
       private int goalBlue = -1;
       private int lastPressed = 2;
       private int timeoutCount = 0;
+      ColorReading color;
       
     
     
@@ -665,8 +666,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      */
     public void actionPerformed(ActionEvent e) {
         try {
-            
-
 // Count for framerate
             this.count = this.count+1;
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
@@ -709,8 +708,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             // Get the color's normalized reading from the sensor
             // Change DummyRgb to SensorRgb for actual device
             //DummyRgb.ColorReading color;  
-            RgbSensor.ColorReading color;
-            color = colorRead.getNormalizedReading();           // CHANGE
+            if(this.count % 60 == 0) {
+                this.color = colorRead.getNormalizedReading();           // CHANGE
+            }
+            
             int r = color.getRed();
             int g = color.getGreen();
             int b = color.getBlue();
