@@ -133,9 +133,6 @@ public class SyringePump {
             Thread.sleep(this.delay);
             this.stepPin.low();
             this.currPosition = this.currPosition + 1;
-            /*if(this.maxPressed()) {
-                break;
-            }*/
         }
         this.maxPosition = this.currPosition;
     }

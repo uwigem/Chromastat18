@@ -27,8 +27,6 @@ public class PumpController extends Thread {
     private ArrayList<SyringePump> pumps = new ArrayList<>();
     private int pumpMoving = -1;
     private boolean calibrated = false;
-    private final MCP mcpProviderOne;
-    private final MCP mcpProviderTwo;
     
     /**
      * PumpController's constructor creates the three syringe pumps.
@@ -36,9 +34,7 @@ public class PumpController extends Thread {
      * @throws com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException
      * @throws IOException 
      */
-    public PumpController() throws I2CFactory.UnsupportedBusNumberException, IOException {
-        mcpProviderOne = new MCP(0x20);
-        mcpProviderTwo = new MCP(0x21);
+    public PumpController(MCP mcpProviderOne, MCP mcpProviderTwo) throws I2CFactory.UnsupportedBusNumberException, IOException {
         Map<String, Pin> inarg1 = new HashMap<>();
         Map<String, Pin> inarg2 = new HashMap<>();
         Map<String, Pin> inarg3 = new HashMap<>();

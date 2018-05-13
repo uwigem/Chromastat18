@@ -38,8 +38,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //    /* Uncomment/comment this portion for ACTUAL DEVICE */
     private RgbSensor colorRead;
     private LuxSensor luxSensor;
-    //private final MCP mcpProviderTwo;
-      private PumpController pc = new PumpController();
+    private final MCP mcpProviderOne;
+    private final MCP mcpProviderTwo;
+      private PumpController pc;
       private boolean bubblerOn = false;
       private boolean laserOn = false;
       private GpioPinDigitalOutput bubbler;
@@ -68,12 +69,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        /* Uncomment/comment this portion for ACTUAL DEVICE */
         this.colorRead = new RgbSensor();
         this.luxSensor = new LuxSensor((byte)0x39);
-        //this.mcpProviderTwo = new MCP(0x21);
+        this.mcpProviderOne = new MCP(0x20);
+        this.mcpProviderTwo = new MCP(0x21);
+        pc = new PumpController(this.mcpProviderOne, this.mcpProviderTwo);
 //        this.initPumps();
         this.initPumps();
         
-        //this.bubbler = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B0, PinState.HIGH);
-        //this.laser = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B1, PinState.HIGH);
+        this.bubbler = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B0, PinState.HIGH);
+        this.laser = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B1, PinState.HIGH);
         
         
         
