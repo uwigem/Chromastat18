@@ -96,7 +96,6 @@
                           <Component id="pump2Bar" alignment="0" pref="290" max="32767" attributes="0"/>
                           <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="pump3Bar" alignment="0" pref="290" max="32767" attributes="0"/>
-                          <Component id="pump3plus1" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -145,7 +144,7 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="pump2plus" pref="57" max="32767" attributes="0"/>
+                              <Component id="pump2plus" pref="59" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
@@ -160,9 +159,7 @@
                           <Component id="pump3plus" alignment="1" max="32767" attributes="0"/>
                           <Component id="pump3Bar" alignment="1" pref="42" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                      <Component id="pump3plus1" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -404,14 +401,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="whitePointcalibratePump"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="pump3plus1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="+"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pump3plus1MouseClicked"/>
       </Events>
     </Component>
   </SubComponents>
