@@ -42,7 +42,7 @@ public class DummyPumpController extends Thread {
         Map<String, Pin> inarg2 = new HashMap<>();
         Map<String, Pin> inarg3 = new HashMap<>();
         String[] keys = {"dirPin", "stepPin", "enablePin", "minPin", "maxPin"};
-        Pin[] pins1 = {MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A2};
+        Pin[] pins1 = {MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A6};
         //Pin[] pins2 = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B7, MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B2};
         //Pin[] pins3 = {MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B3};
         SyringePump pump1;
