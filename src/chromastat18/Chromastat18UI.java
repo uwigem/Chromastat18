@@ -68,8 +68,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        this.initPumps();
         this.initPumps();
         
-        this.bubbler = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B0, PinState.LOW);
-        this.laser = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B1, PinState.LOW);
+        this.bubbler = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B0, PinState.HIGH);
+        this.laser = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B1, PinState.HIGH);
         
         
         
@@ -538,9 +538,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private void bubblerToggle(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bubblerToggle
         this.bubblerOn = !this.bubblerOn;
         if(this.bubblerOn) {
-            this.bubbler.high();
-        } else {
             this.bubbler.low();
+        } else {
+            this.bubbler.high();
         }
     }//GEN-LAST:event_bubblerToggle
 
