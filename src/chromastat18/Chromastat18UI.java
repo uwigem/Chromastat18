@@ -655,7 +655,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      */
     public void actionPerformed(ActionEvent e) {
         try {
-             pc.getPump(0).getState();
+            // pc.getPump(0).getState();
             // Count for framerate
             this.count = this.count+1;
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
@@ -716,11 +716,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             //}
             
             // ACID IN PUMP 1, BASE IN PUMP 2!
-            if(this.count % 2000 == 0) {
+            /*if(this.count % 2000 == 0) {
                 if(this.goalRed != -1 && this.goalGreen != -1 && this.goalBlue != -1 && pumpVal == -1) {
                     
                 }
-            }
+            }*/
             
             // Set color of color panel and colorStringLabel to rgb string
             Color colorPanelBackground = new Color(r,g,b);
