@@ -47,7 +47,7 @@ public class MCP {
      * @return GpioPinDigitalInput of requested pin
      */
     public GpioPinDigitalInput input(Pin pin) {
-        return gpio.provisionDigitalInputPin(provider, pin, PinPullResistance.PULL_UP);
+        return gpio.provisionDigitalInputPin(provider, pin, "pin", PinPullResistance.PULL_UP);
     }
     
     /**
@@ -57,6 +57,6 @@ public class MCP {
      * @return GpioPinDigitalOutput of requested pin
      */
     public GpioPinDigitalOutput output(Pin pin, PinState pinState){
-        return gpio.provisionDigitalOutputPin(provider, pin, pinState);
+        return gpio.provisionDigitalOutputPin(provider, pin, "pin", pinState);
     }
 }
