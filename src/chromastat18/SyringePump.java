@@ -135,7 +135,7 @@ public class SyringePump {
      * @return Position in terms of percentage full
      */
     public double position() {
-        return (double)this.currPosition/this.maxPosition;
+        return ((double)this.currPosition)/((double)this.maxPosition);
     }
     
     /**
