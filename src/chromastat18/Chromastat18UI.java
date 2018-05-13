@@ -547,7 +547,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     }//GEN-LAST:event_laserToggle
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pc.getState();
+        try {
+            pc.getPump(0).getState();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void manualMove(java.awt.event.MouseEvent evt) {
