@@ -58,7 +58,21 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
                           <Component id="whitePoint" alignment="0" pref="322" max="32767" attributes="0"/>
+=======
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="brightnessPanel4" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="brightnessPanel7" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="brightnessPanel8" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="brightnessPanel9" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="whitePoint" alignment="0" max="32767" attributes="0"/>
+>>>>>>> parent of 51d8839... a
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -75,6 +89,7 @@
                                   <Component id="colorStringLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
+<<<<<<< HEAD
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -86,6 +101,9 @@
                               <Component id="greenPanel" max="32767" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="bluePanel" max="32767" attributes="0"/>
+=======
+                              <EmptySpace min="0" pref="123" max="32767" attributes="0"/>
+>>>>>>> parent of 51d8839... a
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
@@ -164,17 +182,27 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="2" attributes="0">
+<<<<<<< HEAD
                           <Component id="pump1plus" alignment="2" min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="pump1Bar" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
                           <Component id="pump1minus" alignment="2" min="-2" pref="40" max="-2" attributes="0"/>
+=======
+                          <Component id="pump1minus" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
+                          <Component id="pump1plus" alignment="2" max="32767" attributes="0"/>
+                          <Component id="pump1Bar" alignment="0" min="-2" pref="42" max="-2" attributes="0"/>
+>>>>>>> parent of 51d8839... a
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="pump2Bar" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
+<<<<<<< HEAD
                           <Component id="pump2plus" alignment="2" min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="pump2minus" alignment="2" min="-2" pref="40" max="-2" attributes="0"/>
+=======
+                          <Component id="pump2plus" alignment="2" max="32767" attributes="0"/>
+>>>>>>> parent of 51d8839... a
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
@@ -417,16 +445,13 @@
         <Property name="text" type="java.lang.String" value="Toggle Bubbler"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bubblerToggle"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton1ActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="jToggleButton2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Toggle Laser"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="laserToggle"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="redPanel">
       <Properties>

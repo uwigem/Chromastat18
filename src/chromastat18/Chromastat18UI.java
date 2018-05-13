@@ -7,9 +7,7 @@ package chromastat18;
 
 import com.pi4j.gpio.extension.mcp.MCP23017GpioProvider;
 import com.pi4j.gpio.extension.mcp.MCP23017Pin;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
-import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CFactory;
 import java.awt.event.ActionEvent;
@@ -38,8 +36,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //    /* Uncomment/comment this portion for ACTUAL DEVICE */
     private RgbSensor colorRead;
     private LuxSensor luxSensor;
-    private final MCP mcpProviderTwo;
+//    private final MCP mcpProviderOne ;
+//    private final MCP mcpProviderTwo;
       private PumpController pc = new PumpController();
+<<<<<<< HEAD
       private boolean bubblerOn = false;
       private boolean laserOn = false;
       private GpioPinDigitalOutput bubbler;
@@ -48,6 +48,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
       private int goalGreen = -1;
       private int goalBlue = -1;
       
+=======
+>>>>>>> parent of 51d8839... a
     
     
     // Uncomment/comment this portion for TESTING
@@ -68,16 +70,20 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        /* Uncomment/comment this portion for ACTUAL DEVICE */
         this.colorRead = new RgbSensor();
         this.luxSensor = new LuxSensor((byte)0x39);
-        this.mcpProviderTwo = new MCP(0x21);
+//        this.mcpProviderOne = new MCP(0x20);
+//        this.mcpProviderTwo = new MCP(0x21);
 //        this.initPumps();
         this.initPumps();
         
+<<<<<<< HEAD
         this.bubbler = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B0, PinState.HIGH);
         this.laser = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B1, PinState.HIGH);
         
         
         
         
+=======
+>>>>>>> parent of 51d8839... a
         timer.start();
         pumpBars.add(pump1Bar);
         pumpBars.add(pump2Bar);
@@ -268,16 +274,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         jToggleButton1.setText("Toggle Bubbler");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bubblerToggle(evt);
+                jToggleButton1ActionPerformed(evt);
             }
         });
 
         jToggleButton2.setText("Toggle Laser");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                laserToggle(evt);
-            }
-        });
 
         redPanel.setBackground(new java.awt.Color(204, 51, 0));
         redPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -357,7 +358,20 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
                             .addComponent(whitePoint, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+=======
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(brightnessPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(brightnessPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(brightnessPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(brightnessPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(45, 45, 45))
+                            .addComponent(whitePoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+>>>>>>> parent of 51d8839... a
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -370,6 +384,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                             .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(colorStringLabel)
                                     .addComponent(jLabel9))
+<<<<<<< HEAD
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -380,6 +395,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                 .addComponent(greenPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(bluePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+=======
+                                .addGap(0, 123, Short.MAX_VALUE)))
+>>>>>>> parent of 51d8839... a
                         .addGap(27, 27, 27))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -436,16 +454,26 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+<<<<<<< HEAD
                             .addComponent(pump1plus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pump1Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pump1minus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+=======
+                            .addComponent(pump1minus, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pump1plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pump1Bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+>>>>>>> parent of 51d8839... a
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(pump2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
                             .addComponent(pump2plus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pump2minus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+=======
+                            .addComponent(pump2plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> parent of 51d8839... a
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
@@ -528,6 +556,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         }
     }//GEN-LAST:event_whitePointcalibratePump
 
+<<<<<<< HEAD
     private void bubblerToggle(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bubblerToggle
         this.bubblerOn = !this.bubblerOn;
         if(this.bubblerOn) {
@@ -545,6 +574,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             this.laser.high();
         }
     }//GEN-LAST:event_laserToggle
+=======
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+>>>>>>> parent of 51d8839... a
 
     private void debugButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debugButtonActionPerformed
         try {
