@@ -47,14 +47,14 @@ public class SyringePump {
      * @return returns if minimum switch is pressed (empty syringe)
      */
     public boolean minPressed() {
-        return this.minStop.isHigh();
+        return this.minStop.isLow();
     }
     
     /**
      * @return returns if the maximum switch is pressed (full syringe)
      */
     public boolean maxPressed() {
-        return this.maxStop.isHigh();
+        return this.maxStop.isLow();
     }
     
     /**
