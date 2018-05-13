@@ -132,7 +132,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         yellowPanel = new javax.swing.JPanel();
         greenPanel = new javax.swing.JPanel();
         bluePanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        debugButton = new javax.swing.JButton();
 
         jProgressBar2.setForeground(new java.awt.Color(51, 51, 255));
         jProgressBar2.setValue(50);
@@ -341,10 +341,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             .addGap(0, 62, Short.MAX_VALUE)
         );
 
-        jButton1.setText("debug");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        debugButton.setText("debug");
+        debugButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                debugButtonActionPerformed(evt);
             }
         });
 
@@ -384,7 +384,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(debugButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,7 +478,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addGap(54, 54, 54)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))))
+                            .addComponent(debugButton))))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
@@ -546,13 +546,13 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         }
     }//GEN-LAST:event_laserToggle
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void debugButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debugButtonActionPerformed
         try {
             pc.getPump(0).getState();
         } catch (InterruptedException ex) {
             Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_debugButtonActionPerformed
 
     public void manualMove(java.awt.event.MouseEvent evt) {
         int count = 0;
@@ -655,8 +655,27 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      */
     public void actionPerformed(ActionEvent e) {
         try {
-             pc.getPump(0).getState();
-            // Count for framerate
+            //pc.getPump(0).getState();
+            if(pc.getPump(0).minPressed()) {
+                debugButton.setText("1");
+            }
+            if(pc.getPump(0).maxPressed()) {
+                debugButton.setText("2");
+            }
+            if(pc.getPump(1).minPressed()) {
+                debugButton.setText("3");
+            }
+            if(pc.getPump(1).maxPressed()) {
+                debugButton.setText("4");
+            }
+            if(pc.getPump(2).minPressed()) {
+                debugButton.setText("5");
+            }
+            if(pc.getPump(2).maxPressed()) {
+                debugButton.setText("6");
+            }
+
+// Count for framerate
             this.count = this.count+1;
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
             
@@ -741,17 +760,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bluePanel;
-    private javax.swing.JPanel brightnessPanel1;
-    private javax.swing.JPanel brightnessPanel2;
-    private javax.swing.JPanel brightnessPanel3;
-    private javax.swing.JPanel brightnessPanel5;
-    private javax.swing.JPanel brightnessPanel6;
     private javax.swing.JButton calibrationButton;
     private javax.swing.JPanel colorPanel;
     private javax.swing.JLabel colorStringLabel;
+    private javax.swing.JButton debugButton;
     private javax.swing.JPanel greenPanel;
     private javax.swing.JPanel huePanel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
