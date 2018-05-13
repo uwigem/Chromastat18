@@ -725,6 +725,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             // Set hue panel color
             huePanel.setBackground(colorRead.readingToHue(color));
             
+            // Set brightness panel
+            brightnessPanel.setBackground(new Color(c,c,c));
+            
           
         } catch (Exception ex) {
             Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE,null,ex);
