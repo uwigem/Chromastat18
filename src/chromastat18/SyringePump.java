@@ -88,6 +88,13 @@ public class SyringePump {
         }
     }
     
+    public void getState() throws InterruptedException {
+        while(!this.maxPressed()) {
+            Thread.sleep(1);
+        } 
+        System.out.println("got hereeeee");
+    }
+    
     /**
      * Calibrate will move the syringe pump to the minimum position it detects,
      * then to the maximum, and stores the maximum position, and keeps track
@@ -95,13 +102,6 @@ public class SyringePump {
      * @throws InterruptedException 
      */
     public void calibrate() throws InterruptedException {
-        for(int i = 0; i < 1000; i++) {
-            this.dirPin.low();
-            Thread.sleep(this.delay);
-            this.stepPin.high();
-            Thread.sleep(this.delay);
-            this.stepPin.low();
-        }
         while(!this.minPressed()) {
             this.dirPin.low();
             Thread.sleep(this.delay);
