@@ -26,7 +26,6 @@ public class SyringePump {
     private int goal = 0;
     int delay = 1;
     
-    
     /**
      * Constructor for a single syringe pump
      * @pre inArgs must have ONLY these keys: dirPin, stepPin, enablePin, minPin, maxPin
@@ -90,7 +89,7 @@ public class SyringePump {
     }
     
     public void getState() throws InterruptedException {
-        while(!this.minPressed()) {
+        while(!this.maxPressed()) {
             Thread.sleep(1);
         } 
         System.out.println("got hereeeee");
@@ -184,7 +183,7 @@ public class SyringePump {
                 }
             }
         }
-        Thread.sleep(1500); // force a pause after movement
+        Thread.sleep(2000); // force a pause after movement
     }
     
 }

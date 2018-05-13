@@ -65,10 +65,6 @@ public class PumpController extends Thread {
         pumps.add(pump3);
     }
     
-    public SyringePump getPump(int pumpNumber) {
-        return this.pumps.get(pumpNumber);
-    }
-    
     /**
      * @return whether a pump is moving or not (includes rest time)
      */
