@@ -65,6 +65,11 @@ public class DummyPumpController extends Thread {
         System.out.println("got here");
     }
     
+    public void testpump() throws InterruptedException {
+        System.out.println("test");
+        pumps2.get(0).calibrate();
+    }
+    
     public int pumpMoving() {
         return this.pumpMoving;
     }
