@@ -5,14 +5,8 @@
  */
 package chromastat18;
 
-import com.pi4j.io.gpio.GpioPinDigitalInput;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.Pin;
-import com.pi4j.io.gpio.PinState;
-import java.util.Map;
-
 /**
- * SyringePump allows control of a single syringe pump and its limit switches
+ * DummyPump allows control of a fake syringe pump and its fake switches
  * @author WilliamKwok
  */
 public class DummyPump {
@@ -22,7 +16,7 @@ public class DummyPump {
     int delay = 1;
     
     /**
-     * Constructor for a single syringe pump
+     * Constructor for a single fake syringe pump
      * @pre inArgs must have ONLY these keys: dirPin, stepPin, enablePin, minPin, maxPin
      * @param inArgs Map of pins
      * @param mcp 
@@ -33,6 +27,7 @@ public class DummyPump {
     }
     
     /**
+     * minPressed() has the position 0 be the minimum limit
      * @return returns if minimum switch is pressed (empty syringe)
      */
     public boolean minPressed() {
@@ -40,36 +35,11 @@ public class DummyPump {
     }
     
     /**
+     * maxPressed() has the position 1000 be the max limit.
      * @return returns if the maximum switch is pressed (full syringe)
      */
     public boolean maxPressed() {
         return this.currPosition >= 1000;
-    }
-    
-    /**
-     * Moves the syringe a specified amount of steps and direction
-     * @param steps steps to move
-     * @param dispense direction. If dispensing, this will be true.
-     */
-    public void takeSteps(int steps, boolean dispense) throws InterruptedException {
-        int toAdd = 1;
-        if(dispense) {
-            toAdd = -1;
-        } 
-        for(int i = 0; i < steps; i++) {
-            if((dispense && !this.minPressed()) || (!dispense && !this.maxPressed())) {
-                Thread.sleep(this.delay);
-                Thread.sleep(this.delay);
-                this.currPosition = this.currPosition + toAdd;
-            } else {
-                if(this.minPressed()) {
-                    this.currPosition = 0;
-                    this.refill();
-                } else {
-                    this.maxPosition = this.currPosition;
-                }
-            }
-        }
     }
     
     /**
@@ -110,20 +80,32 @@ public class DummyPump {
         return (double)this.currPosition/this.maxPosition;
     }
 
-    void setNewGoal(int newGoal) {
+    /**
+     * Set a new goal for the pump
+     * @param newGoal negative or positive number (dispense or fill)
+     */
+    public void setNewGoal(int newGoal) {
         this.goal = newGoal;
     }
 
-    boolean goalMismatch() {
+    /**
+     * Checks if goal is met or not
+     * @return boolean for if a goal is met or not
+     */
+    public boolean goalMismatch() {
         return this.goal != 0;
     }
 
-    void move() throws InterruptedException {
+    /**
+     * Move will move the pump if there is not a mismatch.
+     * @throws InterruptedException 
+     */
+    public void move() throws InterruptedException {
         int toAdd = 1;
         if(goal < 0) {
             toAdd = -1;
         }
-        while(this.goal != 0) {
+        while(this.goalMismatch()) {
             if((toAdd == 1 && !this.maxPressed()) || (toAdd == -1 && !this.minPressed())) {
                 Thread.sleep(this.delay);
                 Thread.sleep(this.delay);

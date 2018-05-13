@@ -18,8 +18,12 @@ public class Chromastat18 {
      * Invokes the UI. This is literally all it does.
      * All the methods and such are called in the UI.
      * @param args the command line arguments
+     * @throws java.io.IOException
+     * @throws com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException
+     * @throws java.lang.InterruptedException
      */
-    public static void main(String[] args) throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
+    public static void main(String[] args) throws IOException, 
+            I2CFactory.UnsupportedBusNumberException, InterruptedException {
         Chromastat18UI form = new Chromastat18UI();
         form.setVisible(true);
     }

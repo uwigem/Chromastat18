@@ -16,19 +16,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * DummyPumpController controls 3 faux syringe pumps
  * @author WilliamKwok
  */
 public class DummyPumpController extends Thread {
     private ArrayList<DummyPump> pumps = new ArrayList<>();
-    private ArrayList<SyringePump> pumps2 = new ArrayList<>();
+
     private int pumpMoving = -1;
     private boolean calibrated = false;
-    
-    
-    private final MCP mcpProviderOne;
-    private final MCP mcpProviderTwo;
-    
+
+//    // Uncomment this for debug methods
+//    private ArrayList<SyringePump> pumps2 = new ArrayList<>();
+//    private final MCP mcpProviderOne;
+//    private final MCP mcpProviderTwo; 
     
     
     
@@ -36,40 +36,43 @@ public class DummyPumpController extends Thread {
         for(int i = 0; i < 3; i++) {
             pumps.add(new DummyPump());
         }
-        mcpProviderOne = new MCP(0x20);
-        mcpProviderTwo = new MCP(0x21);
-        Map<String, Pin> inarg1 = new HashMap<>();
-        Map<String, Pin> inarg2 = new HashMap<>();
-        Map<String, Pin> inarg3 = new HashMap<>();
-        String[] keys = {"dirPin", "stepPin", "enablePin", "minPin", "maxPin"};
-        //Pin[] pins1 = {MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A2};
-        //Pin[] pins2 = {MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A3};
-        Pin[] pins3 = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_A7, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A7};
-        //SyringePump pump1;
+        // Uncomment below for debug methods for an actual pump
+//        mcpProviderOne = new MCP(0x20);
+//        mcpProviderTwo = new MCP(0x21);
+//        Map<String, Pin> inarg1 = new HashMap<>();
+//        Map<String, Pin> inarg2 = new HashMap<>();
+//        Map<String, Pin> inarg3 = new HashMap<>();
+        
+//        String[] keys = {"dirPin", "stepPin", "enablePin", "minPin", "maxPin"};
+//        Pin[] pins1 = {MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_A1, MCP23017Pin.GPIO_A0, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A2};
+//        Pin[] pins2 = {MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_A3};
+//        Pin[] pins3 = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_A7, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A7};
+//        SyringePump pump1;
 //        SyringePump pump2;
-        SyringePump pump3;
+//        SyringePump pump3;
     
     
-        for(int i = 0; i < keys.length; i++) {
+//        for(int i = 0; i < keys.length; i++) {
 //            inarg1.put(keys[i], pins1[i]);
 //            inarg2.put(keys[i], pins2[i]);
-            inarg3.put(keys[i], pins3[i]);
-        }
+//            inarg3.put(keys[i], pins3[i]);
+//        }
         
-        //pump1 = new SyringePump(inarg1, mcpProviderOne, mcpProviderTwo);
+//        pump1 = new SyringePump(inarg1, mcpProviderOne, mcpProviderTwo);
 //        pump2 = new SyringePump(inarg2, mcpProviderOne, mcpProviderTwo);
-        pump3 = new SyringePump(inarg3, mcpProviderOne, mcpProviderTwo);
+//        pump3 = new SyringePump(inarg3, mcpProviderOne, mcpProviderTwo);
 //        pumps2.add(pump1);
 //        pumps2.add(pump2);
-        pumps2.add(pump3);
-        System.out.println("got here");
+//        pumps2.add(pump3);
+//        System.out.println("got here");
     }
     
-    public void testpump() throws InterruptedException {
-        System.out.println("test");
-        pumps2.get(0).calibrate();
+// testpump is for testing an actual pump. This is for debug.
+//    public void testpump() throws InterruptedException {
+//        System.out.println("test");
+//        pumps2.get(0).calibrate();
 //        pumps2.get(0).getState();
-    }
+//    }
     
     public int pumpMoving() {
         return this.pumpMoving;

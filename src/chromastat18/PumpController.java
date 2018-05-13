@@ -24,17 +24,20 @@ import java.util.logging.Logger;
  * @author WilliamKwok
  */
 public class PumpController extends Thread {
-    private ArrayList<SyringePump> pumps = new ArrayList<>();
+    private final ArrayList<SyringePump> pumps = new ArrayList<>();
     private int pumpMoving = -1;
     private boolean calibrated = false;
     
     /**
      * PumpController's constructor creates the three syringe pumps.
      * The puns are constants that must be set if anything is wrong.
+     * @param mcpProviderOne MCP provider in bus 0x20
+     * @param mcpProviderTwo MCP provider in bus 0x21
      * @throws com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException
      * @throws IOException 
      */
     public PumpController(MCP mcpProviderOne, MCP mcpProviderTwo) throws I2CFactory.UnsupportedBusNumberException, IOException {
+        // Set up pump parameters
         Map<String, Pin> inarg1 = new HashMap<>();
         Map<String, Pin> inarg2 = new HashMap<>();
         Map<String, Pin> inarg3 = new HashMap<>();
@@ -45,14 +48,15 @@ public class PumpController extends Thread {
         SyringePump pump1;
         SyringePump pump2;
         SyringePump pump3;
-    
-    
+        
+        // Create the argument maps
         for(int i = 0; i < keys.length; i++) {
             inarg1.put(keys[i], pins1[i]);
             inarg2.put(keys[i], pins2[i]);
             inarg3.put(keys[i], pins3[i]);
         }
         
+        // Create the pumps and add them to this.pumps
         pump1 = new SyringePump(inarg1, mcpProviderOne, mcpProviderTwo);
         pump2 = new SyringePump(inarg2, mcpProviderOne, mcpProviderTwo);
         pump3 = new SyringePump(inarg3, mcpProviderOne, mcpProviderTwo);
@@ -61,6 +65,11 @@ public class PumpController extends Thread {
         pumps.add(pump3);
     }
     
+    /**
+     * Return a specified SyringePump. Use only for debugging!
+     * @param pumpNumber Specify the pump. 0, 1, or 2.
+     * @return The pump in question.
+     */
     public SyringePump getPump(int pumpNumber) {
         return this.pumps.get(pumpNumber);
     }
@@ -127,12 +136,22 @@ public class PumpController extends Thread {
     @Override
     public void run() {
         while(true) {
+            // Check if the pumps have been calibrated or not
             if(this.calibrated) {
+                //  Check if ANY pumps have a goal mismatch
                 ArrayList<Boolean> pumpsMoving = new ArrayList<>();
                 for(int i = 0; i < pumps.size(); i++) {
                     pumpsMoving.add(pumps.get(i).goalMismatch());
                 }
+                
+                // Only move the first one it sees that has a goal mismatch
                 int pumpMovingIndex = pumpsMoving.indexOf(true);
+                
+                // Set this.pumpMoving to be whatever pump is moving
+                // Additionally, start moving the pump.
+                // Don't worry about the try-catch. Netbeans should add in
+                // whatever you need automatically. I only wrote the part that's
+                // in the try{} part. 
                 if(pumpMovingIndex >= 0) {
                     try {
                         this.pumpMoving = pumpMovingIndex;
@@ -149,6 +168,7 @@ public class PumpController extends Thread {
                     }
                 }
             } else {
+                //If the pump has not been calibrated, calibrate it.
                 try {
                     this.calibrate();
                     

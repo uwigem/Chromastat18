@@ -5,12 +5,9 @@
  */
 package chromastat18;
 
-import com.pi4j.gpio.extension.mcp.MCP23017GpioProvider;
 import com.pi4j.gpio.extension.mcp.MCP23017Pin;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,12 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import java.awt.Color;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 /**
@@ -37,23 +30,22 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private int count = 0;
     
 //    /* Uncomment/comment this portion for ACTUAL DEVICE */
-    private RgbSensor colorRead;
-    private LuxSensor luxSensor;
+    private final RgbSensor colorRead;
+    private final LuxSensor luxSensor;
     private final MCP mcpProviderOne;
     private final MCP mcpProviderTwo;
-      private PumpController pc;
-      private boolean bubblerOn = false;
-      private boolean laserOn = false;
-      private GpioPinDigitalOutput bubbler;
-      private GpioPinDigitalOutput laser;
-      private int goalRed = -1;
-      private int goalGreen = -1;
-      private int goalYellow = -1;
-      private int goalBlue = -1;
-      private int lastPressed = 2;
-      private int timeoutCount = 0;
-      private final TempSensor tempRead = new TempSensor();
-      DecimalFormat d = new DecimalFormat("#.#######");
+    private final PumpController pc;
+    private boolean bubblerOn = false;
+    private boolean laserOn = false;
+    private final GpioPinDigitalOutput bubbler;
+    private final GpioPinDigitalOutput laser;
+    private int goalRed = -1;
+    private int goalGreen = -1;
+    private int goalYellow = -1;
+    private int goalBlue = -1;
+    private int lastPressed = 2;
+    private int timeoutCount = 0;
+      
       
     
     
@@ -68,6 +60,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             
     /**
      * Creates the new GUI, and also invokes the timer to start refreshing.
+     * @throws java.io.IOException
+     * @throws com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException
+     * @throws java.lang.InterruptedException
      */
     public Chromastat18UI() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         initComponents();
@@ -97,12 +92,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         pumpPlus.add(pump1plus);
         pumpPlus.add(pump2plus);
         pumpPlus.add(pump3plus);
-        
-//        redPanel.setVisible(false);
-//        yellowPanel.setVisible(false);
-//        greenPanel.setVisible(false);
-//        bluePanel.setVisible(false);
-//        panelLabels.setVisible(false);
         
     }
 
@@ -143,10 +132,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         debugButton = new javax.swing.JButton();
-        tempNumLabel = new javax.swing.JLabel();
-        humidityNumLabel = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
 
         jProgressBar2.setForeground(new java.awt.Color(51, 51, 255));
         jProgressBar2.setValue(50);
@@ -300,14 +285,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             }
         });
 
-        tempNumLabel.setText("tempNum");
-
-        humidityNumLabel.setText("tempNum");
-
-        jLabel3.setText("Temperature (C):");
-
-        jLabel9.setText("Humidity:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -332,15 +309,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(27, 27, 27))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tempNumLabel)
-                            .addComponent(humidityNumLabel)
-                            .addComponent(debugButton))
+                        .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(debugButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -423,15 +394,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addComponent(colorStringLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(whitePoint, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tempNumLabel)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(humidityNumLabel)
-                            .addComponent(jLabel9))
-                        .addGap(104, 104, 104)
+                        .addGap(149, 149, 149)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(debugButton))))
@@ -613,22 +576,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      * timer parameter. 
      * @param e No need to worry about this, the timer calls it automatically. 
      */
-    public void actionPerformed(ActionEvent e) {
-        double tempNum;
-        double humidityNum;
-        
+    public void actionPerformed(ActionEvent e) {     
         try {
-            
-
-// Count for framerate
+            // Count for framerate
             this.count = this.count+1;
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
             
-            tempNum = tempRead.getReading(TempSensor.MEASURE.CELSIUS);
-            tempNumLabel.setText(d.format(tempNum));
-
-            humidityNum = tempRead.getHumidity();
-            humidityNumLabel.setText(d.format(humidityNum));
             
             // grab pumpMovingValue;
             int pumpVal = pc.pumpMoving();
@@ -746,17 +699,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private javax.swing.JLabel colorStringLabel;
     private javax.swing.JButton debugButton;
     private javax.swing.JPanel huePanel;
-    private javax.swing.JLabel humidityNumLabel;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JProgressBar jProgressBar4;
     private javax.swing.JToggleButton jToggleButton1;
@@ -770,7 +720,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private javax.swing.JProgressBar pump3Bar;
     private javax.swing.JButton pump3minus;
     private javax.swing.JButton pump3plus;
-    private javax.swing.JLabel tempNumLabel;
     private javax.swing.JTextField text1;
     private javax.swing.JButton whitePoint;
     // End of variables declaration//GEN-END:variables
