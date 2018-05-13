@@ -60,7 +60,6 @@ public class RgbSensor {
     private double mGreen;
     private double mBlue;
     private double mClear;
-    private boolean whitePointSet = false;
 
     public RgbSensor()
             throws IOException, I2CFactory.UnsupportedBusNumberException {
@@ -98,18 +97,11 @@ public class RgbSensor {
      */
     public ColorReading getNormalizedReading() throws Exception {
         ColorReading result = getReading();
-        if(this.whitePointSet) {
-            result.red = (int) ((double) result.red * mRed);
-            result.green = (int) ((double) result.green * mGreen);
-            result.blue = (int) ((double) result.blue * mBlue);
-            result.clear = (int) ((double) result.clear * mClear);
-        } else {
-            result.red = 0;
-            result.green = 0;
-            result.blue = 0;
-            result.clear = 0;
-        }
-        
+
+        result.red = (int) ((double) result.red * mRed);
+        result.green = (int) ((double) result.green * mGreen);
+        result.blue = (int) ((double) result.blue * mBlue);
+        result.clear = (int) ((double) result.clear * mClear);
 
         return result;
     }
@@ -143,7 +135,6 @@ public class RgbSensor {
         this.mGreen = 255 / (double) cRead.green;
         this.mBlue = 255 / (double) cRead.blue;
         this.mClear = 765 / (double) cRead.clear;
-        this.whitePointSet = true;
 
     }
 
@@ -211,6 +202,45 @@ public class RgbSensor {
             Thread.sleep(ms);
         } catch (InterruptedException ie) {
             ie.printStackTrace();
+        }
+    }
+
+    /**
+     * Simple subclass containing numerical color reading information
+     */
+    public class ColorReading {
+
+        private int red, blue, green, clear;
+
+        public ColorReading(int r, int b, int g, int c) {
+            this.red = r;
+            this.blue = b;
+            this.green = g;
+            this.clear = c;
+        }
+
+        public int getRed() {
+            return this.red;
+        }
+
+        public int getBlue() {
+            return this.blue;
+        }
+
+        public int getGreen() {
+            return this.green;
+        }
+
+        public int getClear() {
+            return this.clear;
+        }
+
+        @Override
+        public String toString() {
+            return "Red:" + Integer.toString(red)
+                    + "\nBlue:" + Integer.toString(blue)
+                    + "\nGreen:" + Integer.toString(green)
+                    + "\nClear:" + Integer.toString(clear);
         }
     }
 }
