@@ -36,7 +36,7 @@ public class SyringePump {
         //Pin dirPin = inArgs.get("test");
         this.dirPin = mcp1.output(inArgs.get("dirPin"), PinState.LOW);
         this.stepPin = mcp1.output(inArgs.get("stepPin"), PinState.LOW);
-        this.enablePin = mcp1.output(inArgs.get("enablePin"), PinState.LOW);
+        this.enablePin = mcp1.output(inArgs.get("enablePin"), PinState.HIGH);
         this.minStop = mcp2.input(inArgs.get("minPin"));
         this.maxStop = mcp2.input(inArgs.get("maxPin"));
         this.maxPosition = 0;
