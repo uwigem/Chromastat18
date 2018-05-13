@@ -63,7 +63,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        this.initPumps();
         this.initPumps();
         
-        //timer.start();
+        timer.start();
         pumpBars.add(pump1Bar);
         pumpBars.add(pump2Bar);
         pumpBars.add(pump3Bar);
@@ -511,6 +511,15 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      */
     public void actionPerformed(ActionEvent e) {
         try {
+            
+            System.out.println("pcpmpm" + pc.pumpMoving());
+            
+            
+            
+            
+            
+            
+            /*
             // Count for framerate
             this.count = this.count+1;
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
@@ -578,7 +587,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             // Set hue panel color
             huePanel.setBackground(colorRead.readingToHue(color));
             
-            
+            */
             
             
         } catch (Exception ex) {
