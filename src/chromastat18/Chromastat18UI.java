@@ -95,6 +95,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         pumpPlus.add(pump2plus);
         pumpPlus.add(pump3plus);
         
+        redPanel.setVisible(false);
+        yellowPanel.setVisible(false);
+        greenPanel.setVisible(false);
+        bluePanel.setVisible(false);
+        panelLabels.setVisible(false);
+        
     }
 
     /**
@@ -134,7 +140,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         redPanel = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        panelLabels = new javax.swing.JLabel();
         yellowPanel = new javax.swing.JPanel();
         greenPanel = new javax.swing.JPanel();
         bluePanel = new javax.swing.JPanel();
@@ -300,7 +306,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             .addGap(0, 62, Short.MAX_VALUE)
         );
 
-        jLabel9.setText("Select a target color");
+        panelLabels.setText("Select a target color");
 
         yellowPanel.setBackground(new java.awt.Color(153, 153, 0));
         yellowPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -375,7 +381,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                             .addComponent(jLabel2)
                                             .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(colorStringLabel)
-                                    .addComponent(jLabel9))
+                                    .addComponent(panelLabels))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -474,7 +480,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(whitePoint, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9)
+                        .addComponent(panelLabels)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(bluePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -799,11 +805,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JProgressBar jProgressBar4;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JLabel panelLabels;
     private javax.swing.JProgressBar pump1Bar;
     private javax.swing.JButton pump1minus;
     private javax.swing.JButton pump1plus;
