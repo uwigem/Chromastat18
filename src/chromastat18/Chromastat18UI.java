@@ -37,14 +37,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private LuxSensor luxSensor;
 //    private final MCP mcpProviderOne ;
 //    private final MCP mcpProviderTwo;
-      //private PumpController pc;
+      private PumpController pc;
     
     
     // Uncomment/comment this portion for TESTING
 //    private DummyRgb colorRead = new DummyRgb();
 //    private DummyLux luxSensor = new DummyLux();
 //    private ArrayList<DummyPump> pumps = new ArrayList<>();
-    private DummyPumpController dpc = new DummyPumpController();
+  //  private DummyPumpController pc = new DummyPumpController();
     ArrayList<JProgressBar> pumpBars = new ArrayList<>();
     ArrayList<JButton> pumpMinus = new ArrayList<>();
     ArrayList<JButton> pumpPlus = new ArrayList<>();
@@ -368,12 +368,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     }// </editor-fold>//GEN-END:initComponents
 
     private void calibratePump(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibratePump
-        if(!dpc.isCalibrated()) {
+        if(!pc.isCalibrated()) {
                 calibrationButton.setText("Calibrating...");
                 calibrationButton.setEnabled(false);
-                dpc.start();
+                pc.start();
         } else {
-            dpc.recalibrate();
+            pc.recalibrate();
         }
     }//GEN-LAST:event_calibratePump
 
@@ -414,7 +414,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         int count = 0;
         for(JButton button : pumpMinus) {
             if(button == evt.getComponent()) {
-                dpc.setNewGoal(count, -100);
+                pc.setNewGoal(count, -100);
             } else {
                 count++;
             }
@@ -422,7 +422,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         count = 0;
         for(JButton button : pumpPlus) {
             if(button == evt.getComponent()) {
-                dpc.setNewGoal(count, 100);
+                pc.setNewGoal(count, 100);
             } else {
                 count++;
             }
@@ -528,11 +528,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             
             
             // grab pumpMovingValue;
-            int pumpVal = dpc.pumpMoving();
+            int pumpVal = pc.pumpMoving();
             
             // If the pump is moving, log out that it's moving.
             if(Integer.parseInt(this.text1.getText()) % 20 == 0 && pumpVal != -1) {
-                System.out.println("pump #" + dpc.pumpMoving() + " moving. Position: " + dpc.getPumpPos(pumpVal));
+                System.out.println("pump #" + pc.pumpMoving() + " moving. Position: " + pc.getPumpPos(pumpVal));
             }
             
             if(pumpVal != -1) {
@@ -551,13 +551,13 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 }
             }
             
-            if(dpc.isCalibrated()) {
+            if(pc.isCalibrated()) {
                 calibrationButton.setText("Re-calibrate");
                 calibrationButton.setEnabled(true);
             }
             
             if(pumpVal != -1) {
-                pumpBars.get(pumpVal).setValue((int)(dpc.getPumpPos(pumpVal)*pumpBars.get(pumpVal).getMaximum()) +1);
+                pumpBars.get(pumpVal).setValue((int)(pc.getPumpPos(pumpVal)*pumpBars.get(pumpVal).getMaximum()) +1);
             }
             
             // Get the color's normalized reading from the sensor
