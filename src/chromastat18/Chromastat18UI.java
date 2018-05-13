@@ -7,7 +7,9 @@ package chromastat18;
 
 import com.pi4j.gpio.extension.mcp.MCP23017GpioProvider;
 import com.pi4j.gpio.extension.mcp.MCP23017Pin;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
+import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CFactory;
 import java.awt.event.ActionEvent;
@@ -35,9 +37,13 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //    /* Uncomment/comment this portion for ACTUAL DEVICE */
     private RgbSensor colorRead;
     private LuxSensor luxSensor;
-//    private final MCP mcpProviderOne ;
-//    private final MCP mcpProviderTwo;
+    private final MCP mcpProviderTwo;
       private PumpController pc = new PumpController();
+      private boolean bubblerOn = false;
+      private boolean laserOn = false;
+      private GpioPinDigitalOutput bubbler;
+      private GpioPinDigitalOutput laser;
+      
     
     
     // Uncomment/comment this portion for TESTING
@@ -58,10 +64,15 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        /* Uncomment/comment this portion for ACTUAL DEVICE */
         this.colorRead = new RgbSensor();
         this.luxSensor = new LuxSensor((byte)0x39);
-//        this.mcpProviderOne = new MCP(0x20);
-//        this.mcpProviderTwo = new MCP(0x21);
+        this.mcpProviderTwo = new MCP(0x21);
 //        this.initPumps();
         this.initPumps();
+        
+        this.bubbler = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B0, PinState.LOW);
+        this.laser = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B1, PinState.LOW);
+        
+        
+        
         
         timer.start();
         pumpBars.add(pump1Bar);
@@ -270,11 +281,16 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         jToggleButton1.setText("Toggle Bubbler");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                bubblerToggle(evt);
             }
         });
 
         jToggleButton2.setText("Toggle Laser");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                laserToggle(evt);
+            }
+        });
 
         brightnessPanel4.setBackground(new java.awt.Color(204, 51, 0));
         brightnessPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -347,15 +363,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(brightnessPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(brightnessPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(brightnessPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(brightnessPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(45, 45, 45))
                             .addComponent(whitePoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,7 +380,16 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                             .addComponent(jLabel3)))
                                     .addComponent(colorStringLabel)
                                     .addComponent(jLabel9))
-                                .addGap(0, 123, Short.MAX_VALUE)))
+                                .addGap(0, 105, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(brightnessPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(brightnessPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(brightnessPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(brightnessPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(27, 27, 27))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -428,7 +444,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(pump1minus, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pump1plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pump1plus, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                             .addComponent(pump1Bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
@@ -436,7 +452,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(pump2minus, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pump2Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pump2plus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(pump2plus, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addGap(7, 7, 7)
@@ -519,9 +535,23 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         }
     }//GEN-LAST:event_whitePointcalibratePump
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    private void bubblerToggle(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bubblerToggle
+        this.bubblerOn = !this.bubblerOn;
+        if(this.bubblerOn) {
+            this.bubbler.high();
+        } else {
+            this.bubbler.low();
+        }
+    }//GEN-LAST:event_bubblerToggle
+
+    private void laserToggle(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_laserToggle
+        this.laserOn = !this.laserOn;
+        if(this.laserOn) {
+            this.laser.high();
+        } else {
+            this.laser.low();
+        }
+    }//GEN-LAST:event_laserToggle
 
     public void manualMove(java.awt.event.MouseEvent evt) {
         int count = 0;
