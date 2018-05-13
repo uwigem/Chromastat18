@@ -47,7 +47,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
       private GpioPinDigitalOutput laser;
       private int goalRed = -1;
       private int goalGreen = -1;
+      private int goalYellow = -1;
       private int goalBlue = -1;
+      private int lastPressed = 2;
+      private int timeoutCount = 0;
       
     
     
@@ -526,6 +529,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private void whitePointcalibratePump(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_whitePointcalibratePump
         try {
             colorRead.setWhitePoint();
+            this.goalBlue = -1;
+            this.goalYellow = -1;
+            this.goalGreen = -1;
+            this.goalRed = -1;
         } catch (Exception ex) {
             Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -658,25 +665,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      */
     public void actionPerformed(ActionEvent e) {
         try {
-            //pc.getPump(0).getState();
-            if(pc.getPump(0).minPressed()) {
-                debugButton.setText("1");
-            }
-            if(pc.getPump(0).maxPressed()) {
-                debugButton.setText("2");
-            }
-            if(pc.getPump(1).minPressed()) {
-                debugButton.setText("3");
-            }
-            if(pc.getPump(1).maxPressed()) {
-                debugButton.setText("4");
-            }
-            if(pc.getPump(2).minPressed()) {
-                debugButton.setText("5");
-            }
-            if(pc.getPump(2).maxPressed()) {
-                debugButton.setText("6");
-            }
+            
 
 // Count for framerate
             this.count = this.count+1;
@@ -721,7 +710,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             // Change DummyRgb to SensorRgb for actual device
             //DummyRgb.ColorReading color;  
             RgbSensor.ColorReading color;
-            color = colorRead.getNormalizedReading();           // CHANGE
+            color = colorRead.getReading();           // CHANGE
             int r = color.getRed();
             int g = color.getGreen();
             int b = color.getBlue();
@@ -737,12 +726,45 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 // have pumpcontroller have an internal timer that forces a pause after movement.
             //}
             
-            // ACID IN PUMP 1, BASE IN PUMP 2!
+            /*// ACID IN PUMP 1, BASE IN PUMP 2!
             if(this.count % 2000 == 0) {
-                if(this.goalRed != -1 && this.goalGreen != -1 && this.goalBlue != -1 && pumpVal == -1) {
-                    
+                if(pumpVal == -1) {
+                    if(this.goalRed == 1) {
+                        if((255-r) > 20) {
+                            pc.setNewGoal(0,-100);
+                        } else {
+                            this.goalRed = -1;
+                            this.lastPressed = 0;
+                        }
+                    }
+                    if(this.goalYellow == 1) {
+                        if(Math.abs(this.goalRed-r) > 20 && Math.abs(this.goalGreen-g) > 20 && Math.abs(this.goalBlue-b) > 20) {
+                            if(this.lastPressed < 1) {
+                                pc.setNewGoal(1,-100);
+                            } else {
+                                pc.setNewGoal(0,-100);
+                            }
+                        } else {
+                            this.goalYellow = -1;
+                            this.lastPressed = 1;
+                        }
+                    }
+                    if(this.goalBlue == 1) {
+                        if(Math.abs(this.goalRed-r) > 20 && Math.abs(this.goalGreen-g) > 20 && Math.abs(this.goalBlue-b) > 20) {
+                            if(this.lastPressed < 2) {
+                                pc.setNewGoal(1,-100);
+                            } else {
+                                pc.setNewGoal(0,-100);
+                            }
+                        } else {
+                            this.goalBlue = -1;
+                            this.lastPressed = 1;
+                        }
+                    }
+
+                    //pc.setNewGoal(count, -100);
                 }
-            }
+            }*/
             
             // Set color of color panel and colorStringLabel to rgb string
             Color colorPanelBackground = new Color(r,g,b);
