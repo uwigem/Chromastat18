@@ -558,7 +558,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             }
             
             if(pumpVal != -1) {
-                pumpBars.get(pumpVal).setValue((int)(pc.getPumpPos(pumpVal)*pumpBars.get(pumpVal).getMaximum()) +1);
+                pumpBars.get(pumpVal).setValue((int)(pc.getPumpPos(pumpVal)*pumpBars.get(pumpVal).getMaximum()));
             }
             
             // Get the color's normalized reading from the sensor
