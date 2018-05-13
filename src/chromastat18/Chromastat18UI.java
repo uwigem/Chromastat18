@@ -63,7 +63,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 //        this.initPumps();
         this.initPumps();
         
-        timer.start();
+        //timer.start();
         pumpBars.add(pump1Bar);
         pumpBars.add(pump2Bar);
         pumpBars.add(pump3Bar);
