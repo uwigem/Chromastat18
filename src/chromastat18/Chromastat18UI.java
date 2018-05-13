@@ -655,7 +655,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      */
     public void actionPerformed(ActionEvent e) {
         try {
-            
+             pc.getPump(0).getState();
             // Count for framerate
             this.count = this.count+1;
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
