@@ -95,11 +95,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         pumpPlus.add(pump2plus);
         pumpPlus.add(pump3plus);
         
-        redPanel.setVisible(false);
-        yellowPanel.setVisible(false);
-        greenPanel.setVisible(false);
-        bluePanel.setVisible(false);
-        panelLabels.setVisible(false);
+//        redPanel.setVisible(false);
+//        yellowPanel.setVisible(false);
+//        greenPanel.setVisible(false);
+//        bluePanel.setVisible(false);
+//        panelLabels.setVisible(false);
         
     }
 
