@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 /**
@@ -43,6 +44,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
       private boolean laserOn = false;
       private GpioPinDigitalOutput bubbler;
       private GpioPinDigitalOutput laser;
+      private int goalRed = -1;
+      private int goalGreen = -1;
+      private int goalBlue = -1;
       
     
     
@@ -84,6 +88,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         pumpPlus.add(pump1plus);
         pumpPlus.add(pump2plus);
         pumpPlus.add(pump3plus);
+        
     }
 
     /**
@@ -103,10 +108,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         text1 = new javax.swing.JTextField();
         colorPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        brightnessPanel = new javax.swing.JPanel();
         huePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         colorStringLabel = new javax.swing.JLabel();
         pump1Bar = new javax.swing.JProgressBar();
         jLabel4 = new javax.swing.JLabel();
@@ -124,11 +127,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         whitePoint = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
-        brightnessPanel4 = new javax.swing.JPanel();
+        redPanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        brightnessPanel7 = new javax.swing.JPanel();
-        brightnessPanel8 = new javax.swing.JPanel();
-        brightnessPanel9 = new javax.swing.JPanel();
+        yellowPanel = new javax.swing.JPanel();
+        greenPanel = new javax.swing.JPanel();
+        bluePanel = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         jProgressBar2.setForeground(new java.awt.Color(51, 51, 255));
         jProgressBar2.setValue(50);
@@ -161,21 +165,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 
         jLabel1.setText("Color");
 
-        brightnessPanel.setBackground(new java.awt.Color(0, 0, 0));
-        brightnessPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        brightnessPanel.setToolTipText("");
-
-        javax.swing.GroupLayout brightnessPanelLayout = new javax.swing.GroupLayout(brightnessPanel);
-        brightnessPanel.setLayout(brightnessPanelLayout);
-        brightnessPanelLayout.setHorizontalGroup(
-            brightnessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 62, Short.MAX_VALUE)
-        );
-        brightnessPanelLayout.setVerticalGroup(
-            brightnessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 62, Short.MAX_VALUE)
-        );
-
         huePanel.setBackground(new java.awt.Color(0, 0, 0));
         huePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         huePanel.setToolTipText("");
@@ -192,8 +181,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         );
 
         jLabel2.setText("Hue");
-
-        jLabel3.setText("Brightness");
 
         colorStringLabel.setText("colorstring");
 
@@ -292,67 +279,74 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             }
         });
 
-        brightnessPanel4.setBackground(new java.awt.Color(204, 51, 0));
-        brightnessPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        brightnessPanel4.setToolTipText("");
+        redPanel.setBackground(new java.awt.Color(204, 51, 0));
+        redPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        redPanel.setToolTipText("");
 
-        javax.swing.GroupLayout brightnessPanel4Layout = new javax.swing.GroupLayout(brightnessPanel4);
-        brightnessPanel4.setLayout(brightnessPanel4Layout);
-        brightnessPanel4Layout.setHorizontalGroup(
-            brightnessPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout redPanelLayout = new javax.swing.GroupLayout(redPanel);
+        redPanel.setLayout(redPanelLayout);
+        redPanelLayout.setHorizontalGroup(
+            redPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        brightnessPanel4Layout.setVerticalGroup(
-            brightnessPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        redPanelLayout.setVerticalGroup(
+            redPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 62, Short.MAX_VALUE)
         );
 
         jLabel9.setText("Select a target color");
 
-        brightnessPanel7.setBackground(new java.awt.Color(204, 51, 0));
-        brightnessPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        brightnessPanel7.setToolTipText("");
+        yellowPanel.setBackground(new java.awt.Color(153, 153, 0));
+        yellowPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        yellowPanel.setToolTipText("");
 
-        javax.swing.GroupLayout brightnessPanel7Layout = new javax.swing.GroupLayout(brightnessPanel7);
-        brightnessPanel7.setLayout(brightnessPanel7Layout);
-        brightnessPanel7Layout.setHorizontalGroup(
-            brightnessPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout yellowPanelLayout = new javax.swing.GroupLayout(yellowPanel);
+        yellowPanel.setLayout(yellowPanelLayout);
+        yellowPanelLayout.setHorizontalGroup(
+            yellowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        brightnessPanel7Layout.setVerticalGroup(
-            brightnessPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        yellowPanelLayout.setVerticalGroup(
+            yellowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 62, Short.MAX_VALUE)
         );
 
-        brightnessPanel8.setBackground(new java.awt.Color(204, 51, 0));
-        brightnessPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        brightnessPanel8.setToolTipText("");
+        greenPanel.setBackground(new java.awt.Color(0, 153, 0));
+        greenPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        greenPanel.setToolTipText("");
 
-        javax.swing.GroupLayout brightnessPanel8Layout = new javax.swing.GroupLayout(brightnessPanel8);
-        brightnessPanel8.setLayout(brightnessPanel8Layout);
-        brightnessPanel8Layout.setHorizontalGroup(
-            brightnessPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout greenPanelLayout = new javax.swing.GroupLayout(greenPanel);
+        greenPanel.setLayout(greenPanelLayout);
+        greenPanelLayout.setHorizontalGroup(
+            greenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        brightnessPanel8Layout.setVerticalGroup(
-            brightnessPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        greenPanelLayout.setVerticalGroup(
+            greenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 62, Short.MAX_VALUE)
         );
 
-        brightnessPanel9.setBackground(new java.awt.Color(204, 51, 0));
-        brightnessPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        brightnessPanel9.setToolTipText("");
+        bluePanel.setBackground(new java.awt.Color(0, 102, 102));
+        bluePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        bluePanel.setToolTipText("");
 
-        javax.swing.GroupLayout brightnessPanel9Layout = new javax.swing.GroupLayout(brightnessPanel9);
-        brightnessPanel9.setLayout(brightnessPanel9Layout);
-        brightnessPanel9Layout.setHorizontalGroup(
-            brightnessPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout bluePanelLayout = new javax.swing.GroupLayout(bluePanel);
+        bluePanel.setLayout(bluePanelLayout);
+        bluePanelLayout.setHorizontalGroup(
+            bluePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        brightnessPanel9Layout.setVerticalGroup(
-            brightnessPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        bluePanelLayout.setVerticalGroup(
+            bluePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 62, Short.MAX_VALUE)
         );
+
+        jButton1.setText("debug");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -363,7 +357,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(whitePoint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(whitePoint, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -373,26 +367,24 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel2)
-                                            .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3)))
+                                            .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(colorStringLabel)
                                     .addComponent(jLabel9))
-                                .addGap(0, 110, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(brightnessPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(redPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(brightnessPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(yellowPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(brightnessPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(greenPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(brightnessPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(bluePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(27, 27, 27))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -435,7 +427,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addGap(7, 7, 7))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -471,8 +462,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(huePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(brightnessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(colorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(colorStringLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -481,12 +471,14 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(brightnessPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(brightnessPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(brightnessPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(brightnessPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(55, 55, 55)
-                        .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(bluePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(greenPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(yellowPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(redPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(54, 54, 54)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(text1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
@@ -553,6 +545,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             this.laser.high();
         }
     }//GEN-LAST:event_laserToggle
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        pc.getState();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void manualMove(java.awt.event.MouseEvent evt) {
         int count = 0;
@@ -660,18 +656,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             this.count = this.count+1;
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
             
-            // run whatever is in here every 2000ms (2 seconds)
-            // worry about this later
-            //if(this.count % 2000 == 0) {
-                //take a reading
-                //dep on color, select a pump to move. 
-                // if the pump isn't moving, set new goal to be a calculated number
-                // if it is moving, do nothing.
-                // have pumpcontroller have an internal timer that forces a pause after movement.
-            //}
-            
-            
-            
             
             
             // grab pumpMovingValue;
@@ -717,6 +701,23 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             int b = color.getBlue();
             int c = color.getClear();
             
+            // run whatever is in here every 2000ms (2 seconds)
+            // worry about this later
+            //if(this.count % 2000 == 0) {
+                //take a reading
+                //dep on color, select a pump to move. 
+                // if the pump isn't moving, set new goal to be a calculated number
+                // if it is moving, do nothing.
+                // have pumpcontroller have an internal timer that forces a pause after movement.
+            //}
+            
+            // ACID IN PUMP 1, BASE IN PUMP 2!
+            if(this.count % 2000 == 0) {
+                if(this.goalRed != -1 && this.goalGreen != -1 && this.goalBlue != -1 && pumpVal == -1) {
+                    
+                }
+            }
+            
             // Set color of color panel and colorStringLabel to rgb string
             Color colorPanelBackground = new Color(r,g,b);
             colorPanel.setBackground(colorPanelBackground);
@@ -725,8 +726,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             // Set hue panel color
             huePanel.setBackground(colorRead.readingToHue(color));
             
-            // Set brightness panel
-            brightnessPanel.setBackground(new Color(c,c,c));
             
           
         } catch (Exception ex) {
@@ -737,24 +736,21 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel brightnessPanel;
+    private javax.swing.JPanel bluePanel;
     private javax.swing.JPanel brightnessPanel1;
     private javax.swing.JPanel brightnessPanel2;
     private javax.swing.JPanel brightnessPanel3;
-    private javax.swing.JPanel brightnessPanel4;
     private javax.swing.JPanel brightnessPanel5;
     private javax.swing.JPanel brightnessPanel6;
-    private javax.swing.JPanel brightnessPanel7;
-    private javax.swing.JPanel brightnessPanel8;
-    private javax.swing.JPanel brightnessPanel9;
     private javax.swing.JButton calibrationButton;
     private javax.swing.JPanel colorPanel;
     private javax.swing.JLabel colorStringLabel;
+    private javax.swing.JPanel greenPanel;
     private javax.swing.JPanel huePanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -774,7 +770,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private javax.swing.JProgressBar pump3Bar;
     private javax.swing.JButton pump3minus;
     private javax.swing.JButton pump3plus;
+    private javax.swing.JPanel redPanel;
     private javax.swing.JTextField text1;
     private javax.swing.JButton whitePoint;
+    private javax.swing.JPanel yellowPanel;
     // End of variables declaration//GEN-END:variables
 }

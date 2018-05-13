@@ -21,10 +21,12 @@ public class SyringePump {
     private final GpioPinDigitalOutput enablePin;
     private final GpioPinDigitalInput minStop;
     private final GpioPinDigitalInput maxStop;
+    private static final int FORCE_REST_TIME = 1000;
     private int maxPosition;
     private int currPosition;
     private int goal = 0;
     int delay = 1;
+    
     
     /**
      * Constructor for a single syringe pump
@@ -183,7 +185,7 @@ public class SyringePump {
                 }
             }
         }
-        Thread.sleep(2000); // force a pause after movement
+        Thread.sleep(FORCE_REST_TIME); // force a pause after movement
     }
     
 }
