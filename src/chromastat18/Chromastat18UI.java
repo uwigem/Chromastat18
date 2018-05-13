@@ -710,7 +710,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             // Change DummyRgb to SensorRgb for actual device
             //DummyRgb.ColorReading color;  
             RgbSensor.ColorReading color;
-            color = colorRead.getReading();           // CHANGE
+            color = colorRead.getNormalizedReading();           // CHANGE
             int r = color.getRed();
             int g = color.getGreen();
             int b = color.getBlue();
