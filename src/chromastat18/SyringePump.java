@@ -91,7 +91,7 @@ public class SyringePump {
     }
     
     public void getState() throws InterruptedException {
-        while(!this.maxPressed()) {
+        while(!this.minPressed()) {
             Thread.sleep(1);
         } 
         System.out.println("got hereeeee");
