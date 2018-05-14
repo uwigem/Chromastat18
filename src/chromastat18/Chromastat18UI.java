@@ -56,18 +56,16 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private int goalBlue = -1;
     private int lastPressed = 2;
     private int timeoutCount = 0;
+    ArrayList<JProgressBar> pumpBars = new ArrayList<>();
+    ArrayList<JButton> pumpMinus = new ArrayList<>();
+    ArrayList<JButton> pumpPlus = new ArrayList<>();
       
-      
-    
-    
     // Uncomment/comment this portion for TESTING
 //    private DummyRgb colorRead = new DummyRgb();
 //    private DummyLux luxSensor = new DummyLux();
 //    private ArrayList<DummyPump> pumps = new ArrayList<>();
 //    private DummyPumpController dpc = new DummyPumpController();
-    ArrayList<JProgressBar> pumpBars = new ArrayList<>();
-    ArrayList<JButton> pumpMinus = new ArrayList<>();
-    ArrayList<JButton> pumpPlus = new ArrayList<>();
+    
             
     /**
      * Creates the new GUI, and also invokes the timer to start refreshing.
@@ -75,6 +73,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      * @throws com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException
      */
     public Chromastat18UI() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
+        // Initialize components
         initComponents();
         
 //        /* Uncomment/comment this portion for ACTUAL DEVICE */
@@ -82,26 +81,20 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         this.luxSensor = new LuxSensor((byte)0x39);
         this.mcpProviderOne = new MCP(0x20);
         this.mcpProviderTwo = new MCP(0x21);
-        pc = new PumpController(this.mcpProviderOne, this.mcpProviderTwo);
-//        this.initPumps();
-        this.initPumps();
-        
+        this.pc = new PumpController(this.mcpProviderOne, this.mcpProviderTwo);
         this.bubbler = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B0, PinState.HIGH);
         this.laser = this.mcpProviderTwo.output(MCP23017Pin.GPIO_B1, PinState.HIGH);
         
-        
-        
-        
-        timer.start();
-        pumpBars.add(pump1Bar);
-        pumpBars.add(pump2Bar);
-        pumpBars.add(pump3Bar);
-        pumpMinus.add(pump1minus);
-        pumpMinus.add(pump2minus);
-        pumpMinus.add(pump3minus);
-        pumpPlus.add(pump1plus);
-        pumpPlus.add(pump2plus);
-        pumpPlus.add(pump3plus);
+        this.timer.start();
+        this.pumpBars.add(this.pump1Bar);
+        this.pumpBars.add(this.pump2Bar);
+        this.pumpBars.add(this.pump3Bar);
+        this.pumpMinus.add(this.pump1minus);
+        this.pumpMinus.add(this.pump2minus);
+        this.pumpMinus.add(this.pump3minus);
+        this.pumpPlus.add(this.pump1plus);
+        this.pumpPlus.add(this.pump2plus);
+        this.pumpPlus.add(this.pump3plus);
         
     }
 
@@ -415,12 +408,12 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     }// </editor-fold>//GEN-END:initComponents
 
     private void calibratePump(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calibratePump
-        if(!pc.isCalibrated()) {
-                calibrationButton.setText("Calibrating...");
-                calibrationButton.setEnabled(false);
-                pc.start();
+        if(!this.pc.isCalibrated()) {
+                this.calibrationButton.setText("Calibrating...");
+                this.calibrationButton.setEnabled(false);
+                this.pc.start();
         } else {
-            pc.recalibrate();
+            this.pc.recalibrate();
         }
     }//GEN-LAST:event_calibratePump
 
@@ -451,7 +444,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 
     private void whitePointcalibratePump(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_whitePointcalibratePump
         try {
-            colorRead.setWhitePoint();
+            this.colorRead.setWhitePoint();
             this.goalBlue = -1;
             this.goalYellow = -1;
             this.goalGreen = -1;
@@ -485,17 +478,17 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
 
     public void manualMove(java.awt.event.MouseEvent evt) {
         int count = 0;
-        for(JButton button : pumpMinus) {
+        for(JButton button : this.pumpMinus) {
             if(button == evt.getComponent()) {
-                pc.setNewGoal(count, -100);
+                this.pc.setNewGoal(count, -100);
             } else {
                 count++;
             }
         }
         count = 0;
-        for(JButton button : pumpPlus) {
+        for(JButton button : this.pumpPlus) {
             if(button == evt.getComponent()) {
-                pc.setNewGoal(count, 100);
+                this.pc.setNewGoal(count, 100);
             } else {
                 count++;
             }
@@ -545,38 +538,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         });
     }
     
-    public void initPumps() {
-//        Map<String, Pin> inarg1 = new HashMap<String, Pin>();
-//        Map<String, Pin> inarg2 = new HashMap<String, Pin>();
-//        Map<String, Pin> inarg3 = new HashMap<String, Pin>();
-//        String[] keys = {"dirPin", "stepPin", "enablePin", "minPin", "maxPin"};
-//        Pin[] pins1 = {MCP23017Pin.GPIO_A7, MCP23017Pin.GPIO_A6, MCP23017Pin.GPIO_A5, MCP23017Pin.GPIO_B5, MCP23017Pin.GPIO_B1};
-//        Pin[] pins2 = {MCP23017Pin.GPIO_B0, MCP23017Pin.GPIO_B1, MCP23017Pin.GPIO_B7, MCP23017Pin.GPIO_B4, MCP23017Pin.GPIO_B2};
-//        Pin[] pins3 = {MCP23017Pin.GPIO_A4, MCP23017Pin.GPIO_A3, MCP23017Pin.GPIO_A2, MCP23017Pin.GPIO_B6, MCP23017Pin.GPIO_B3};
-//        SyringePump pump1;
-//        SyringePump pump2;
-//        SyringePump pump3;
-//    
-//    
-//        for(int i = 0; i < keys.length; i++) {
-//            inarg1.put(keys[i], pins1[i]);
-//            inarg2.put(keys[i], pins2[i]);
-//            inarg3.put(keys[i], pins3[i]);
-//        }
-//        
-//        pump1 = new SyringePump(inarg1, mcpProviderOne, mcpProviderTwo);
-//        pump2 = new SyringePump(inarg2, mcpProviderOne, mcpProviderTwo);
-//        pump3 = new SyringePump(inarg3, mcpProviderOne, mcpProviderTwo);
-//        pumps.add(pump1);
-//        pumps.add(pump2);
-//        pumps.add(pump3);
-//        for(int i = 0; i < 3; i++) {
-//            pumps.add(new DummyPump());
-//        }
-
-    }
-   
-    
     /**
      * This method is called every few milliseconds, dependent on the
      * timer parameter. 
@@ -590,48 +551,52 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             
             
             // grab pumpMovingValue;
-            int pumpVal = pc.pumpMoving();
+            int pumpVal = this.pc.pumpMoving();
             
             // If the pump is moving, log out that it's moving.
             if(Integer.parseInt(this.text1.getText()) % 20 == 0 && pumpVal != -1) {
-                System.out.println("pump #" + pc.pumpMoving() + " moving. Position: " + pc.getPumpPos(pumpVal));
+                System.out.println("pump #" + this.pc.pumpMoving() + " moving. Position: " + this.pc.getPumpPos(pumpVal));
             }
             
             if(pumpVal != -1) {
-                for(JButton pumpM : pumpMinus) {
+                for(JButton pumpM : this.pumpMinus) {
                     pumpM.setEnabled(false);
                 }
-                for(JButton pumpM : pumpPlus) {
+                for(JButton pumpM : this.pumpPlus) {
                     pumpM.setEnabled(false);
                 }
             } else {
-                for(JButton pumpM : pumpMinus) {
+                for(JButton pumpM : this.pumpMinus) {
                     pumpM.setEnabled(true);
                 }
-                for(JButton pumpM : pumpPlus) {
+                for(JButton pumpM : this.pumpPlus) {
                     pumpM.setEnabled(true);
                 }
             }
             
-            if(pc.isCalibrated()) {
-                calibrationButton.setText("Re-calibrate");
-                calibrationButton.setEnabled(true);
+            if(this.pc.isCalibrated()) {
+                this.calibrationButton.setText("Re-calibrate");
+                this.calibrationButton.setEnabled(true);
             }
             
             if(pumpVal != -1) {
-                pumpBars.get(pumpVal).setValue((int)(pc.getPumpPos(pumpVal)*pumpBars.get(pumpVal).getMaximum()));
+                this.pumpBars.get(pumpVal).setValue((int)(this.pc.getPumpPos(pumpVal)*this.pumpBars.get(pumpVal).getMaximum()));
             }
             
             // Get the color's normalized reading from the sensor
             // Change DummyRgb to SensorRgb for actual device
             //DummyRgb.ColorReading color;  
             RgbSensor.ColorReading color;
-            color = colorRead.getNormalizedReading();           // CHANGE
+            color = this.colorRead.getNormalizedReading();           // CHANGE
             int r = color.getRed();
             int g = color.getGreen();
             int b = color.getBlue();
             int c = color.getClear();
             
+            
+            /**
+             * This part is unfinished, it is the autonomous color changing code.
+             */
             // run whatever is in here every 2000ms (2 seconds)
             // worry about this later
             //if(this.count % 2000 == 0) {
@@ -684,11 +649,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             
             // Set color of color panel and colorStringLabel to rgb string
             Color colorPanelBackground = new Color(r,g,b);
-            colorPanel.setBackground(colorPanelBackground);
-            colorStringLabel.setText(r + "," + g + "," + b);
+            this.colorPanel.setBackground(colorPanelBackground);
+            this.colorStringLabel.setText(r + "," + g + "," + b);
             
             // Set hue panel color
-            huePanel.setBackground(colorRead.readingToHue(color));
+            this.huePanel.setBackground(this.colorRead.readingToHue(color));
             
             
           
