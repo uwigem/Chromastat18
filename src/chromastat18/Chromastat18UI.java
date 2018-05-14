@@ -1,7 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2018 WilliamKwok
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package chromastat18;
 
@@ -62,7 +73,6 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
      * Creates the new GUI, and also invokes the timer to start refreshing.
      * @throws java.io.IOException
      * @throws com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException
-     * @throws java.lang.InterruptedException
      */
     public Chromastat18UI() throws IOException, I2CFactory.UnsupportedBusNumberException, InterruptedException {
         initComponents();
@@ -470,11 +480,7 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     }//GEN-LAST:event_laserToggle
 
     private void debugButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debugButtonActionPerformed
-        try {
-            pc.getPump(0).getState();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.out.println("debug");
     }//GEN-LAST:event_debugButtonActionPerformed
 
     public void manualMove(java.awt.event.MouseEvent evt) {

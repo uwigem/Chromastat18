@@ -29,11 +29,12 @@ import java.io.IOException;
  * Note that this sensor's I2C address is fixed
  * at 0x29 in the hardware and cannot be changed.
  * 
- * @author Washington iGEM Team 2017
+ * @author Jase Grills, William Kwok
  */
 public class RgbSensor {
 
     // Command/settings Registers
+    // These are given
     public final static byte COMMAND_BIT = (byte) 0x80;
     public final static byte ADDR_DEFAULT = 0x29;
     public final static int TCS34725_ENABLE = 0x00;
@@ -61,6 +62,11 @@ public class RgbSensor {
     private double mBlue;
     private double mClear;
 
+    /**
+     * Constructor sets up the sensor
+     * @throws IOException
+     * @throws com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException 
+     */
     public RgbSensor()
             throws IOException, I2CFactory.UnsupportedBusNumberException {
 
@@ -79,6 +85,11 @@ public class RgbSensor {
         this.write8(TCS34725_ENABLE, (byte) (TCS34725_ENABLE_PON | TCS34725_ENABLE_AEN));
     }
 
+    /**
+     * getReading will return the current sensor's reading.
+     * @return ColorReading object of the raw readings
+     * @throws Exception 
+     */
     public ColorReading getReading() throws Exception {
         int r = this.readU16(TCS34725_RDATAL);
         int b = this.readU16(TCS34725_BDATAL);
@@ -92,7 +103,7 @@ public class RgbSensor {
      * Returns a color reading which takes into account the offset
      * created by setting a white point. Behavior undefined if white point
      * has not been set.
-     * @return
+     * @return normalized reading
      * @throws Exception 
      */
     public ColorReading getNormalizedReading() throws Exception {
@@ -196,6 +207,10 @@ public class RgbSensor {
         return c;
     }
 
+    /**
+     * Sleeps the thread
+     * @param ms time to sleep the thread for in milliseconds
+     */
     @SuppressWarnings("CallToPrintStackTrace")
     private static void waitfor(int ms) {
         try {
