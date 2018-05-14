@@ -476,6 +476,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         System.out.println("debug");
     }//GEN-LAST:event_debugButtonActionPerformed
 
+    /**
+     * manualMove checks which button exactly was clicked, and then moves the 
+     * specific pump. This is hard coded to support only the three specific pumps
+     * @param evt button click event, where the button is put into an arraylist
+     */
     public void manualMove(java.awt.event.MouseEvent evt) {
         int count = 0;
         for(JButton button : this.pumpMinus) {
@@ -654,14 +659,9 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             
             // Set hue panel color
             this.huePanel.setBackground(this.colorRead.readingToHue(color));
-            
-            
-          
         } catch (Exception ex) {
             Logger.getLogger(Chromastat18UI.class.getName()).log(Level.SEVERE,null,ex);
-        }
-   
-        
+        } 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
