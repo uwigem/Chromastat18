@@ -54,8 +54,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
     private int goalGreen = -1;
     private int goalYellow = -1;
     private int goalBlue = -1;
-    private int lastPressed = 2;
-    private int timeoutCount = 0;
+    //private int lastPressed = 2;
+    //private int timeoutCount = 0;
     ArrayList<JProgressBar> pumpBars = new ArrayList<>();
     ArrayList<JButton> pumpMinus = new ArrayList<>();
     ArrayList<JButton> pumpPlus = new ArrayList<>();
