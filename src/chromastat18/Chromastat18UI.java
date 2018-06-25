@@ -556,6 +556,8 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             
             
             // grab pumpMovingValue;
+            
+            // CHANGE THIS TO USE ARRAYLIST
             int pumpVal = this.pc.pumpMoving();
             
             // If the pump is moving, log out that it's moving.

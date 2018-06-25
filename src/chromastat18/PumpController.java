@@ -36,7 +36,7 @@ import java.util.logging.Logger;
  */
 public class PumpController extends Thread {
     private final ArrayList<SyringePump> pumps = new ArrayList<>();
-    private int pumpMoving = -1;
+    private ArrayList<Integer> pumpMoving = new ArrayList<>();
     private boolean calibrated = false;
     
     /**
@@ -88,7 +88,7 @@ public class PumpController extends Thread {
     /**
      * @return whether a pump is moving or not (includes rest time)
      */
-    public int pumpMoving() {
+    public ArrayList<Integer> pumpMoving() {
         return this.pumpMoving;
     }
     
@@ -107,7 +107,7 @@ public class PumpController extends Thread {
      * @param newGoal any negative or positive number. Don't go overboard with this!
      */
     public void setNewGoal(int pumpNumber, int newGoal) {
-        if(this.pumpMoving == -1) {
+        if(!this.pumpMoving.contains(pumpNumber)) {
             pumps.get(pumpNumber).setNewGoal(newGoal);
         }
     }
@@ -124,12 +124,14 @@ public class PumpController extends Thread {
      * its calibrated state to true.
      * @throws InterruptedException 
      */
+    
+    //CHANGE THIS FOR PARALLEL CALIBRATION
     public void calibrate() throws InterruptedException {
         for(int i = 0; i < 3; i++) {
-            this.pumpMoving = i;
+            this.pumpMoving.add(i);
             this.pumps.get(i).calibrate();
+            this.pumpMoving.remove(i);
         }
-        this.pumpMoving = -1;
         this.calibrated = true;
     }
     
@@ -150,6 +152,8 @@ public class PumpController extends Thread {
             // Check if the pumps have been calibrated or not
             if(this.calibrated) {
                 //  Check if ANY pumps have a goal mismatch
+                
+                //CHANGE LOOP TO BE IF THERE IS A GOAL MISMATCH, ADD TO PUMPMOVING <INTEGER>
                 ArrayList<Boolean> pumpsMoving = new ArrayList<>();
                 for(int i = 0; i < pumps.size(); i++) {
                     pumpsMoving.add(pumps.get(i).goalMismatch());
@@ -163,6 +167,8 @@ public class PumpController extends Thread {
                 // Don't worry about the try-catch. Netbeans should add in
                 // whatever you need automatically. I only wrote the part that's
                 // in the try{} part. 
+                
+                //CHANGE THIS TO HAVE ALL PUMPS THAT HAVE MISMATCH STEP
                 if(pumpMovingIndex >= 0) {
                     try {
                         this.pumpMoving = pumpMovingIndex;
