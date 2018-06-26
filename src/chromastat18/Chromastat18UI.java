@@ -556,16 +556,16 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             
             
             // grab pumpMovingValue;
-            
-            // CHANGE THIS TO USE ARRAYLIST
-            int pumpVal = this.pc.pumpMoving();
+            ArrayList<Integer> movingPumps = this.pc.pumpMoving();
             
             // If the pump is moving, log out that it's moving.
-            if(Integer.parseInt(this.text1.getText()) % 20 == 0 && pumpVal != -1) {
-                System.out.println("pump #" + this.pc.pumpMoving() + " moving. Position: " + this.pc.getPumpPos(pumpVal));
+            if(Integer.parseInt(this.text1.getText()) % 20 == 0 && movingPumps.size() > 0) {
+                for (int i = 0; i < movingPumps.size(); i++){
+                    System.out.println("pump #" + movingPumps.get(i) + " moving. Position: " + this.pc.getPumpPos(movingPumps.get(i)));
+                }
             }
             
-            if(pumpVal != -1) {
+            if(movingPumps.size() > 0) {
                 for(JButton pumpM : this.pumpMinus) {
                     pumpM.setEnabled(false);
                 }
@@ -586,8 +586,11 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
                 this.calibrationButton.setEnabled(true);
             }
             
-            if(pumpVal != -1) {
-                this.pumpBars.get(pumpVal).setValue((int)(this.pc.getPumpPos(pumpVal)*this.pumpBars.get(pumpVal).getMaximum()));
+            if(movingPumps.size() > 0) {
+                for(int i = 0; i < movingPumps.size(); i++){
+                    this.pumpBars.get(movingPumps.get(i)).setValue((int)(this.pc.getPumpPos(movingPumps.get(i))
+                            * this.pumpBars.get(movingPumps.get(i)).getMaximum()));
+                }
             }
             
             // Get the color's normalized reading from the sensor
