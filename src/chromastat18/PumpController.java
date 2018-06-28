@@ -159,7 +159,7 @@ public class PumpController extends Thread {
                     }
                 }
                 // step all pumps that in pumpMoving                
-                if(pumpMoving.size() >= 0) {
+                if(pumpMoving.size() > 0) {
                     try {
                         for(int i = 0; i < pumpMoving.size(); i++){
                             pumps.get(pumpMoving.get(i)).move();
