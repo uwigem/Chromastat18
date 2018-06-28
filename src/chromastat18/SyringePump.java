@@ -36,6 +36,7 @@ public class SyringePump {
     private int maxPosition;
     private int currPosition;
     private int goal = 0;
+    private boolean calibrating; //default is false
     int delay = 1;
     
     
@@ -107,21 +108,8 @@ public class SyringePump {
      * @throws InterruptedException 
      */
     public void calibrate() throws InterruptedException {
-        while(!this.minPressed()) {
-            System.out.println("getting here3");
-            this.dirPin.low();
-            Thread.sleep(this.delay);
-            this.stepPin.high();
-            Thread.sleep(this.delay);
-            this.stepPin.low();
-            if(this.minPressed()) {
-                System.out.println("getting here");
-            }
-        }
-        System.out.println("getting here2");
-        this.currPosition = 0;
-        this.refill();
-        this.goal = 0;
+        calibrating = true;
+        this.setNewGoal(-1 * Integer.MAX_VALUE);
     }
     
     /**
@@ -175,25 +163,31 @@ public class SyringePump {
             toAdd = -1;
             this.dirPin.low();
         }
-        while(this.goal != 0) {
-            if((toAdd == 1 && !this.maxPressed()) || (toAdd == -1 && !this.minPressed())) {
-                Thread.sleep(this.delay);
-                this.stepPin.high();
-                Thread.sleep(this.delay);
-                this.stepPin.low();
-                this.currPosition = this.currPosition + toAdd;
-                this.goal = this.goal - toAdd;
-            } else {
-                if(this.minPressed()) {
-                    this.currPosition = 0;
-                    this.refill();
-                } else {
-                    this.maxPosition = this.currPosition;
+        if(calibrating){
+            System.out.println("getting here3");
+        }
+        if((toAdd == 1 && !this.maxPressed()) || (toAdd == -1 && !this.minPressed())) {
+            Thread.sleep(this.delay);
+            this.stepPin.high();
+            Thread.sleep(this.delay);
+            this.stepPin.low();
+            this.currPosition = this.currPosition + toAdd;
+            this.goal = this.goal - toAdd;
+        } else {
+            if(this.minPressed()) {
+                if(calibrating){
                     this.goal = 0;
+                    calibrating = false;
+                    System.out.println("getting here");
                 }
+                this.currPosition = 0;
+                this.refill();
+            } else {
+                this.maxPosition = this.currPosition;
+                this.goal = 0;
             }
         }
-        Thread.sleep(FORCE_REST_TIME); // force a pause after movement
     }
+
     
 }

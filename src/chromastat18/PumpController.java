@@ -151,36 +151,19 @@ public class PumpController extends Thread {
         while(true) {
             // Check if the pumps have been calibrated or not
             if(this.calibrated) {
-                //  Check if ANY pumps have a goal mismatch
-                
-                //CHANGE LOOP TO BE IF THERE IS A GOAL MISMATCH, ADD TO PUMPMOVING <INTEGER>
-                ArrayList<Boolean> pumpsMoving = new ArrayList<>();
+                //  Test all pumps for goalMismatch
+                pumpMoving.clear();
                 for(int i = 0; i < pumps.size(); i++) {
-                    pumpsMoving.add(pumps.get(i).goalMismatch());
-                }
-                
-                // Only move the first one it sees that has a goal mismatch
-                int pumpMovingIndex = pumpsMoving.indexOf(true);
-                
-                // Set this.pumpMoving to be whatever pump is moving
-                // Additionally, start moving the pump.
-                // Don't worry about the try-catch. Netbeans should add in
-                // whatever you need automatically. I only wrote the part that's
-                // in the try{} part. 
-                
-                //CHANGE THIS TO HAVE ALL PUMPS THAT HAVE MISMATCH STEP
-                if(pumpMovingIndex >= 0) {
-                    try {
-                        this.pumpMoving = pumpMovingIndex;
-                        pumps.get(pumpMovingIndex).move();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(DummyPumpController.class.getName()).log(Level.SEVERE, null, ex);
+                    if(pumps.get(i).goalMismatch()){
+                        pumpMoving.add(i);
                     }
-                } else {
-                    // Otherwise if all the goals are met, then pumpMoving is set to -1
-                    this.pumpMoving = -1;
+                }
+                // step all pumps that in pumpMoving                
+                if(pumpMoving.size() >= 0) {
                     try {
-                        Thread.sleep(1);
+                        for(int i = 0; i < pumpMoving.size(); i++){
+                            pumps.get(pumpMoving.get(i)).move();
+                        }
                     } catch (InterruptedException ex) {
                         Logger.getLogger(DummyPumpController.class.getName()).log(Level.SEVERE, null, ex);
                     }
