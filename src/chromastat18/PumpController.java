@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  * We only HAVE to move one pump at a time, but more testing must occur to 
  * determine if the Pi has more than 4 threads we can run java in. If it does,
  * then we can have each pump have its own thread.
- * @author WilliamKwok
+ * @author WilliamKwok, RehaanBhimani
  */
 public class PumpController extends Thread {
     private final ArrayList<SyringePump> pumps = new ArrayList<>();

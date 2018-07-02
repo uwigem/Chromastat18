@@ -33,7 +33,7 @@ import javax.swing.JProgressBar;
 
 /**
  * UI Class of Chromastat 18
- * @author WilliamKwok
+ * @author WilliamKwok,RehaanBhimani
  */
 public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
     // Set up a timer for refreshing the graphics

@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * DummyPump simulates a syringe pump
- * @author WilliamKwok
+ * @author WilliamKwok, RehaanBhimani
  */
 public class SyringePump {
     private final GpioPinDigitalOutput dirPin;
