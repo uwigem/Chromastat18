@@ -125,12 +125,11 @@ public class PumpController extends Thread {
      * @throws InterruptedException 
      */
     
-    //CHANGE THIS FOR PARALLEL CALIBRATION
     public void calibrate() throws InterruptedException {
         for(int i = 0; i < 3; i++) {
             this.pumpMoving.add(i);
             this.pumps.get(i).calibrate();
-            this.pumpMoving.remove(i);
+            this.pumpMoving.clear();
         }
         this.calibrated = true;
     }
