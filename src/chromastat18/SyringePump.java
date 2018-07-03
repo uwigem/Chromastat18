@@ -117,15 +117,7 @@ public class SyringePump {
      * @throws InterruptedException 
      */
     public void refill() throws InterruptedException {
-        while(!this.maxPressed()) {
-            this.dirPin.high();
-            Thread.sleep(this.delay);
-            this.stepPin.high();
-            Thread.sleep(this.delay);
-            this.stepPin.low();
-            this.currPosition = this.currPosition + 1;
-        }
-        this.maxPosition = this.currPosition;
+        this.setNewGoal(Integer.MAX_VALUE);
     }
     
     /**
