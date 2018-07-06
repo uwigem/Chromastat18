@@ -104,7 +104,8 @@ public class SyringePump {
     /**
      * Calibrate will move the syringe pump to the minimum position it detects,
      * then to the maximum, and stores the maximum position, and keeps track
-     * of current position.
+     * of current position. Does this by setting impossible goal and changing goal
+     * to 0 when the pump hits the limit switch, then refills to get maximum.
      * @throws InterruptedException 
      */
     public void calibrate() throws InterruptedException {
@@ -114,6 +115,8 @@ public class SyringePump {
     
     /**
      * Refill refills the syringe and resets the maximum position of the syringe
+     * Does by setting impossible goal and then changing goal to 0 when pump hits
+     * limit switch.
      * @throws InterruptedException 
      */
     public void refill() throws InterruptedException {
@@ -144,8 +147,11 @@ public class SyringePump {
     }
     
     /**
-     * Move will move the syringe pump to the set goal, if there is one. 
-     * Otherwise, it'll just do nothing. It refills automatically as well.
+     * Move will move the syringe pump towards the set goal, if there is one. 
+     * If no goal mismatches, it'll just do nothing. It refills automatically as well.
+     * Note: in previous version, this method moves one pump to its goal, in this version
+     * it steps all pumps towards their respective goals. Each move() is a step, not 
+     * full movement toward a goal.
      * @throws InterruptedException 
      */
     void move() throws InterruptedException {

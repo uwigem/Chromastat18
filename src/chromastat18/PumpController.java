@@ -157,7 +157,7 @@ public class PumpController extends Thread {
                         pumpMoving.add(i);
                     }
                 }
-                // step all pumps that in pumpMoving                
+                // step all pumps with goal mismatch (in pumpMoving)                
                 if(pumpMoving.size() > 0) {
                     try {
                         for(int i = 0; i < pumpMoving.size(); i++){

@@ -33,7 +33,7 @@ import javax.swing.JProgressBar;
 
 /**
  * UI Class of Chromastat 18
- * @author WilliamKwok,RehaanBhimani
+ * @author WilliamKwok, RehaanBhimani
  */
 public class Chromastat18UI extends javax.swing.JFrame implements ActionListener {
     // Set up a timer for refreshing the graphics
@@ -555,10 +555,10 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
             this.text1.setText(String.valueOf(Integer.parseInt(this.text1.getText())+1));
             
             
-            // grab pumpMovingValue;
+            // grabs all of the pumps with a goal mismatch
             ArrayList<Integer> movingPumps = this.pc.pumpMoving();
             
-            // If the pump is moving, log out that it's moving.
+            // log out moving pumps
             if(Integer.parseInt(this.text1.getText()) % 20 == 0 && movingPumps.size() > 0) {
                 for (int i = 0; i < movingPumps.size(); i++){
                     System.out.println("pump #" + movingPumps.get(i) + " moving. Position: " + this.pc.getPumpPos(movingPumps.get(i)));
