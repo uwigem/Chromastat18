@@ -17,8 +17,12 @@
 package chromastat18;
 
 import com.pi4j.gpio.extension.mcp.MCP23017Pin;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.GpioPinPwmOutput;
 import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.i2c.I2CFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -96,6 +100,18 @@ public class Chromastat18UI extends javax.swing.JFrame implements ActionListener
         this.pumpPlus.add(this.pump2plus);
         this.pumpPlus.add(this.pump3plus);
         
+        
+        // down here is led code to just turn the LED on.
+        final GpioController gpio = GpioFactory.getInstance(); // get pin #s
+        
+        // port 12, 23, 18 respectively is 18, 11, and 24. Look at pin chart to
+        // double check if this is changed.
+        GpioPinPwmOutput rPin = gpio.provisionSoftPwmOutputPin(RaspiPin.GPIO_18);
+        GpioPinPwmOutput gPin = gpio.provisionSoftPwmOutputPin(RaspiPin.GPIO_11);
+        GpioPinPwmOutput bPin = gpio.provisionSoftPwmOutputPin(RaspiPin.GPIO_24);
+        rPin.setPwm(100);
+        gPin.setPwm(100);
+        bPin.setPwm(100);
     }
 
     /**
